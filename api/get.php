@@ -1,8 +1,12 @@
 <?php
-require $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog/local/php-github-api/vendor/autoload.php";
+/*
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+*/
+require __DIR__ . "/../local/php-github-api/vendor/autoload.php";
+require __DIR__ . "/../local/MainClass.php";
+
 $client = new \Github\Client();
 
 switch ($_REQUEST["method"])
@@ -18,6 +22,12 @@ switch ($_REQUEST["method"])
     case "commit_info":
         $commit = $client->api("repos")->commits()->show($_REQUEST["args"]["login"],$_REQUEST["args"]["repository_name"], $_REQUEST["args"]["sha"]);
         echo json_encode($commit);
+        break;
+    case "events_list":
+        $limit = intval($_REQUEST["args"]["limit"]);
+        $idFrom = $_REQUEST["args"]["id_from"] ? $_REQUEST["args"]["id_from"] : false;
+        $events = MainClass::getEventsList($client,$_REQUEST["args"]["login"], $limit, $idFrom, $_REQUEST["args"]["compare"]);
+        echo json_encode($events);
         break;
     default: json_encode(array("unknown method"));
 }
