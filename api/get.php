@@ -15,5 +15,9 @@ switch ($_REQUEST["method"])
         $commits = $client->api("repos")->commits()->all($_REQUEST["args"]["login"],$_REQUEST["args"]["repository_name"], array());
         echo json_encode($commits);
         break;
+    case "commit_info":
+        $commit = $client->api("repos")->commits()->show($_REQUEST["args"]["login"],$_REQUEST["args"]["repository_name"], $_REQUEST["args"]["sha"]);
+        echo json_encode($commit);
+        break;
     default: json_encode(array("unknown method"));
 }
