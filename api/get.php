@@ -8,6 +8,7 @@ require __DIR__ . "/../local/php-github-api/vendor/autoload.php";
 require __DIR__ . "/../local/MainClass.php";
 
 $client = new \Github\Client();
+header('Content-Type: application/json');
 
 switch ($_REQUEST["method"])
 {

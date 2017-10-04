@@ -1,0 +1,49 @@
+.main-menu{
+    background-color: #56AA1C;
+    height: 70px;
+}
+.menu-block{
+    height: 70px;
+}
+.main-menu .menu-block a{
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+    margin-left: 75px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #B2E072;
+    line-height: 70px;
+}
+
+.main-menu .menu-block a:hover{
+    color: #FFFFE9;
+}
+
+.main-menu .menu-block{
+    margin-left: 330px;
+}
+
+.main-menu .authorization-block{
+    position: absolute;
+    right: 50px;
+    top:10px
+}
+
+.popup{
+    display: none;
+    width:100%;
+    min-height:100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow:hidden;
+    position:fixed;
+    top:0px;
+}
+
+.popup .popup-content{
+    margin:40px auto 0px auto;
+    width:100px;
+    height: 40px;
+    padding:10px;
+    background-color: #c5c5c5;
+    border-radius:5px;
+    box-shadow: 0px 0px 10px #000;
+}
