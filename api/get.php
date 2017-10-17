@@ -5,30 +5,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 */
 require __DIR__ . "/../local/php-github-api/vendor/autoload.php";
-require __DIR__ . "/../local/MainClass.php";
+require __DIR__ . "/../local/lib/Repository.php";
 
-$client = new \Github\Client();
+$repository = new Repository();
+
 header('Content-Type: application/json');
 
 switch ($_REQUEST["method"])
 {
-    case "user_info":
-        $repositories = $client->api('user')->show($_REQUEST["args"]["login"]);
-        echo json_encode($repositories);
-        break;
     case "commits_list":
-        $commits = $client->api("repos")->commits()->all($_REQUEST["args"]["login"],$_REQUEST["args"]["repository_name"], array());
-        echo json_encode($commits);
+        $repository->loadById($_REQUEST["args"]["id"]);
+        echo json_encode($repository->getUserCommits());
         break;
-    case "commit_info":
-        $commit = $client->api("repos")->commits()->show($_REQUEST["args"]["login"],$_REQUEST["args"]["repository_name"], $_REQUEST["args"]["sha"]);
-        echo json_encode($commit);
-        break;
-    case "events_list":
-        $limit = intval($_REQUEST["args"]["limit"]);
-        $idFrom = $_REQUEST["args"]["id_from"] ? $_REQUEST["args"]["id_from"] : false;
-        $events = MainClass::getEventsList($client,$_REQUEST["args"]["login"], $limit, $idFrom, $_REQUEST["args"]["compare"]);
-        echo json_encode($events);
-        break;
-    default: json_encode(array("unknown method"));
+    default: echo json_encode("Error");
 }
