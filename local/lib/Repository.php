@@ -71,7 +71,8 @@ class Repository
         if (is_resource($proccess))
         {
             $errors = stream_get_contents($pipes[2]);
-
+            proc_close($proccess);
+            $proccess = proc_open("git checkout master",array(),$pipes,$this->makeRepositPath());
             proc_close($proccess);
             return strlen($errors) == 0 ? true : $errors;
         }
@@ -112,12 +113,19 @@ class Repository
         $process = proc_open("git log --pretty=format:'next-commit:%H|%an|%at|%s'", $descriptors, $pipes,$this->makeRepositPath());
         if (is_resource($process))
         {
+            $first = true;
             $res = array();
             while(!feof($pipes[1]))
             {
-                $line = stream_get_line($pipes[1],5000,"next-commit:");
-                if (strlen($line) == 0) continue;
+                $line = stream_get_line($pipes[1],5000,"\nnext-commit:");
+
                 $message = explode("|",$line,4);
+                if ($first)
+                {
+                    //Костыль, чтобы удалить next-commit: из первой строки
+                    $first = false;
+                    $message[0] = substr($message[0],strlen("next-commit:"));
+                }
                 $res[] = array(
                     "sha" => $message[0],
                     "author_name" => $message[1],
