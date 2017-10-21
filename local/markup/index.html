@@ -7,6 +7,8 @@
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="main.js"></script>
 </head>
+<div class="back">
+</div>
 <header>
     <div class="header-section">
 
@@ -33,11 +35,45 @@
             <div class="header-menu">
                 <a href="#">Личные репозитории</a>
                 <a href="#">Учебные репозитории</a>
-                <img src="img/search.png">
+                <img src="img/search.png" class="js-popup-search">
             </div>
         </div>
     </div>
 </header>
+<div class="popup" id="filter-popup">
+    <div class="popup-content">
+    <div class="popup-title">Фильтр</div>
+    <form method="get">
+
+        <div class="field">
+        <div class="field-name">Язык</div>
+        <select>
+            <option>Любой</option>
+            <option>php</option>
+            <option>C++</option>
+            <option>Java</option>
+        </select>
+        </div>
+
+        <div class="field">
+            <div class="field-name">Теги</div>
+            <input type="text" placeholder="Введите, через запятую">
+        </div>
+
+
+        <div class="field">
+            <div class="field-name">Сортировка</div>
+            <select>
+                <option>По Названию</option>
+                <option>По дате изменения</option>
+            </select>
+        </div>
+        <div class="submit-form">
+            <input type="submit" value="Найти">
+        </div>
+    </form>
+</div>
+</div>
 <body>
 <div class="title">
 <h1>Список личных репозиториев</h1>

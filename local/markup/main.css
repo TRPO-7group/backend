@@ -95,7 +95,7 @@ body{
     height: 20px;
     right: 50px;
     position: absolute;
-
+    cursor: pointer;
 }
 
 .title{
@@ -148,6 +148,53 @@ body{
     height: 30px;
     margin-right: 10px;
     vertical-align: middle;
+}
+.popup{
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-right: 45px;
+    background-color: #d2d6f3;
+    width: 250px;
+    border: solid;
+    z-index: 10;
+}
+
+.popup .field select, .popup .field input{
+    width: 200px;
+}
+
+.popup .popup-content{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.popup .popup-title{
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.popup .submit-form{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.popup .field{
+    margin-top: 10px;
+}
+
+.popup .field-name{
+    font-size: 12pt;
+}
+
+.back{
+    position: absolute;
+    z-index: 5;
+    min-width: 100%;
+    min-height: 100%;
+    display: none;
 }
 
 
