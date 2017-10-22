@@ -32,6 +32,9 @@ class MainClass
         $res = array();
         while ($row = $q->fetch_assoc())
         {
+            $rep = new Repository();
+            $rep->loadById($row["rep_id"]);
+            $commits = $rep->getUserCommits();
             $newRep = array(
                 "id" => $row["rep_id"],
                 "name" => MainClass::getRepositoryName($row["rep_url"]),
@@ -40,8 +43,10 @@ class MainClass
                 "is_ind" => $row["is_ind"],
                 "parent_rep" => $row["pater_rep"],
                 "owner" => $row["rep_owner"],
-                "discipline" => $row['name']
+                "discipline" => $row['name'],
+                "last_commit" => $commits[0]["date"]
             );
+
             if ($group)
                 $res[$row['name']][] = $newRep;
             else

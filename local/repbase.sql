@@ -1,157 +1,207 @@
--- MySQL dump 10.11
+-- phpMyAdmin SQL Dump
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: repbase
--- ------------------------------------------------------
--- Server version	5.0.67-community-nt
+-- Хост: localhost
+-- Время создания: Окт 22 2017 г., 18:42
+-- Версия сервера: 5.7.19-0ubuntu0.16.04.1
+-- Версия PHP: 7.0.22-0ubuntu0.16.04.1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Table structure for table `disc`
+-- База данных: `repbase`
 --
 
-DROP TABLE IF EXISTS `disc`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `disc`
+--
+
 CREATE TABLE `disc` (
-  `disc_id` int(11) NOT NULL,
-  `disc_name` varchar(20) default NULL,
-  PRIMARY KEY  (`disc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Дисциплины';
 
 --
--- Dumping data for table `disc`
+-- Дамп данных таблицы `disc`
 --
 
-LOCK TABLES `disc` WRITE;
-/*!40000 ALTER TABLE `disc` DISABLE KEYS */;
-/*!40000 ALTER TABLE `disc` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `disc` (`id`, `name`) VALUES
+(1, 'Структуры данных и алгоритмы'),
+(2, 'Программирование на JAVA');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `rep`
+-- Структура таблицы `rep`
 --
 
-DROP TABLE IF EXISTS `rep`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `rep` (
   `rep_id` int(11) NOT NULL,
-  `is_ind` tinyint(1) default NULL,
-  `pater_rep` int(11) default NULL,
-  `rep_owner` int(11) default NULL,
-  `rep_disc` int(11) default NULL,
-  PRIMARY KEY  (`rep_id`),
-  KEY `rep_owner` (`rep_owner`),
-  KEY `rep_disc` (`rep_disc`),
-  KEY `pater_rep` (`pater_rep`),
-  CONSTRAINT `rep_ibfk_1` FOREIGN KEY (`rep_owner`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `rep_ibfk_2` FOREIGN KEY (`rep_disc`) REFERENCES `disc` (`disc_id`),
-  CONSTRAINT `rep_ibfk_3` FOREIGN KEY (`pater_rep`) REFERENCES `rep` (`rep_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+  `rep_url` varchar(255) NOT NULL,
+  `rep_description` varchar(255) DEFAULT NULL,
+  `is_ind` tinyint(1) NOT NULL,
+  `pater_rep` int(11) DEFAULT NULL,
+  `rep_owner` int(11) DEFAULT NULL,
+  `rep_disc` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `rep`
+-- Дамп данных таблицы `rep`
 --
 
-LOCK TABLES `rep` WRITE;
-/*!40000 ALTER TABLE `rep` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rep` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `rep` (`rep_id`, `rep_url`, `rep_description`, `is_ind`, `pater_rep`, `rep_owner`, `rep_disc`) VALUES
+(1, 'https://github.com/TRPO-7group/markup.git', 'Версточка', 0, NULL, NULL, 1),
+(2, 'https://github.com/TRPO-7group/backend.git', 'Бэкенд', 1, NULL, NULL, 2);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `reptegs`
+-- Структура таблицы `reptegs`
 --
 
-DROP TABLE IF EXISTS `reptegs`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `reptegs` (
   `id` int(11) NOT NULL,
-  `repid` int(11) default NULL,
-  `tegid` int(11) default NULL,
-  PRIMARY KEY  (`id`),
-  KEY `repid` (`repid`),
-  KEY `tegid` (`tegid`),
-  CONSTRAINT `reptegs_ibfk_1` FOREIGN KEY (`repid`) REFERENCES `rep` (`rep_id`),
-  CONSTRAINT `reptegs_ibfk_2` FOREIGN KEY (`tegid`) REFERENCES `teg` (`teg_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+  `repid` int(11) DEFAULT NULL,
+  `tegid` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `reptegs`
+-- Дамп данных таблицы `reptegs`
 --
 
-LOCK TABLES `reptegs` WRITE;
-/*!40000 ALTER TABLE `reptegs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reptegs` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `reptegs` (`id`, `repid`, `tegid`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 2);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `teg`
+-- Структура таблицы `teg`
 --
 
-DROP TABLE IF EXISTS `teg`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `teg` (
   `teg_id` int(11) NOT NULL,
-  `teg_name` varchar(20) default NULL,
-  PRIMARY KEY  (`teg_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+  `teg_name` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `teg`
+-- Дамп данных таблицы `teg`
 --
 
-LOCK TABLES `teg` WRITE;
-/*!40000 ALTER TABLE `teg` DISABLE KEYS */;
-/*!40000 ALTER TABLE `teg` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `teg` (`teg_id`, `teg_name`) VALUES
+(1, 'quartus'),
+(2, 'big data');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Структура таблицы `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `user_mail` varchar(20) default NULL,
-  `user_type` varchar(20) default NULL,
-  PRIMARY KEY  (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
+  `user_mail` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
+  `user_type` varchar(20) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user`
+-- Индексы сохранённых таблиц
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+--
+-- Индексы таблицы `disc`
+--
+ALTER TABLE `disc`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Индексы таблицы `rep`
+--
+ALTER TABLE `rep`
+  ADD PRIMARY KEY (`rep_id`),
+  ADD KEY `rep_owner` (`rep_owner`),
+  ADD KEY `pater_rep` (`pater_rep`),
+  ADD KEY `rep_desc` (`rep_disc`);
+
+--
+-- Индексы таблицы `reptegs`
+--
+ALTER TABLE `reptegs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `repid` (`repid`),
+  ADD KEY `tegid` (`tegid`);
+
+--
+-- Индексы таблицы `teg`
+--
+ALTER TABLE `teg`
+  ADD PRIMARY KEY (`teg_id`);
+
+--
+-- Индексы таблицы `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `disc`
+--
+ALTER TABLE `disc`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT для таблицы `rep`
+--
+ALTER TABLE `rep`
+  MODIFY `rep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT для таблицы `reptegs`
+--
+ALTER TABLE `reptegs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT для таблицы `teg`
+--
+ALTER TABLE `teg`
+  MODIFY `teg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT для таблицы `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `rep`
+--
+ALTER TABLE `rep`
+  ADD CONSTRAINT `rep_ibfk_1` FOREIGN KEY (`rep_owner`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `rep_ibfk_3` FOREIGN KEY (`pater_rep`) REFERENCES `rep` (`rep_id`);
+
+--
+-- Ограничения внешнего ключа таблицы `reptegs`
+--
+ALTER TABLE `reptegs`
+  ADD CONSTRAINT `reptegs_fkg_key1` FOREIGN KEY (`tegid`) REFERENCES `teg` (`teg_id`),
+  ADD CONSTRAINT `reptegs_fkg_key2` FOREIGN KEY (`repid`) REFERENCES `rep` (`rep_id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-10-21 19:32:03
