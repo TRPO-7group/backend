@@ -1,10 +1,96 @@
 <?php
+require_once "dbconf.php";
+require_once "MainClass.php";
 
 class Repository
 {
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIndividual()
+    {
+        return $this->individual;
+    }
+
+    /**
+     * @param mixed $individual
+     */
+    public function setIndividual($individual)
+    {
+        $this->individual = $individual;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParentRep()
+    {
+        return $this->parent_rep;
+    }
+
+    /**
+     * @param mixed $parent_rep
+     */
+    public function setParentRep($parent_rep)
+    {
+        $this->parent_rep = $parent_rep;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiscpline()
+    {
+        return $this->discpline;
+    }
+
+    /**
+     * @param mixed $discpline
+     */
+    public function setDiscpline($discpline)
+    {
+        $this->discpline = $discpline;
+    }
 
     private $id;
     private $url;
+    private $description;
+    private $individual;
+    private $parent_rep;
+    private $owner;
+    private $discpline;
 
     /**
      * @return mixed
@@ -60,8 +146,7 @@ class Repository
 
     public function getName()
     {
-        preg_match("/.*\/(.*).git/", $this->getUrl(),$matches);
-        return $matches[1];
+        return MainClass::getRepositoryName($this->getUrl());
     }
 
     private function cloneReposit()
@@ -81,11 +166,20 @@ class Repository
 
     public function loadById($id)
     {
-        /*
-         * Выборка из бд, заполнение
-         * */
-        $this->setId($id);
-        $this->setUrl("https://github.com/alexeykotelevskiy/reposit-catalog.git");
+        $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $mysqli->set_charset("utf8");
+        $query = $mysqli->query("SELECT * FROM rep WHERE rep_id=$id");
+        $res = $query->fetch_assoc();
+        if (!$res)
+            return false;
+        $this->setId($res['rep_id']);
+        $this->setUrl($res['rep_url']);
+        $this->setDescription($res['rep_description']);
+        $this->setDiscpline($res['rep_disp']);
+        $this->setIndividual($res['is_ind']);
+        $this->setOwner($res['rep_owner']);
+        $this->setParentRep($res['pater_rep']);
+        $mysqli->close();
     }
 
     private function updateReposit()
