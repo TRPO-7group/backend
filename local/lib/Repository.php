@@ -1,7 +1,7 @@
 <?php
 require_once "dbconf.php";
 require_once "MainClass.php";
-
+require_once "Cache.php";
 class Repository
 {
     /**
@@ -166,10 +166,18 @@ class Repository
 
     public function loadById($id)
     {
-        $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
-        $mysqli->set_charset("utf8");
-        $query = $mysqli->query("SELECT * FROM rep WHERE rep_id=$id");
-        $res = $query->fetch_assoc();
+        $oCache = new Cache();
+        $res = $oCache->load("repository_" . $id);
+        if (!$res) {
+
+
+            $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+            $mysqli->set_charset("utf8");
+            $query = $mysqli->query("SELECT * FROM rep WHERE rep_id=$id");
+            $res = $query->fetch_assoc();
+            $mysqli->close();
+            $oCache->save("repository_" . $id,$res,86400);
+        }
         if (!$res)
             return false;
         $this->setId($res['rep_id']);
@@ -179,13 +187,17 @@ class Repository
         $this->setIndividual($res['is_ind']);
         $this->setOwner($res['rep_owner']);
         $this->setParentRep($res['pater_rep']);
-        $mysqli->close();
+
     }
 
     private function updateReposit()
     {
         $descriptors = $this->getDescriptors();
-        $process = proc_open("git pull origin master", $descriptors,$pipes,$this->makeRepositPath());
+        $process = proc_open("git fetch --all", $descriptors,$pipes,$this->makeRepositPath());
+        proc_close($process);
+
+        $descriptors = $this->getDescriptors();
+        $process = proc_open("git pull --all", $descriptors,$pipes,$this->makeRepositPath());
         proc_close($process);
     }
 
@@ -202,9 +214,11 @@ class Repository
 
     public function getUserCommits()
     {
+        $now = new DateTime();
+        $date = new DateTime();
         $this->checkReposit();
         $descriptors = $this->getDescriptors();
-        $process = proc_open("git log --pretty=format:'next-commit:%H|%an|%at|%s'", $descriptors, $pipes,$this->makeRepositPath());
+        $process = proc_open("git log --all --pretty=format:'next-commit:%H|%an|%at|%s'", $descriptors, $pipes,$this->makeRepositPath());
         if (is_resource($process))
         {
             $first = true;
@@ -220,6 +234,10 @@ class Repository
                     $first = false;
                     $message[0] = substr($message[0],strlen("next-commit:"));
                 }
+
+                $date->setTimestamp($message[2]);
+                $diff = ($now->getTimestamp() - $message[2]) / (60*60*24);
+                if ($diff > 30) break;
                 $res[] = array(
                     "sha" => $message[0],
                     "author_name" => $message[1],
