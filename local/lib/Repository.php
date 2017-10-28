@@ -127,11 +127,7 @@ class Repository
 
 
     private function getDescriptors(){
-        return array(
-            0 => array("pipe", "r"),  // stdin - канал, из которого дочерний процесс будет читать
-            1 => array("pipe", "w"),  // stdout - канал, в который дочерний процесс будет записывать
-            2 => array("pipe", "w") // stderr - файл для записи
-        );
+        return MainClass::getDescriptors();
     }
 
     private function makeStoragePath()
@@ -193,12 +189,21 @@ class Repository
     private function updateReposit()
     {
         $descriptors = $this->getDescriptors();
-        $process = proc_open("git fetch --all", $descriptors,$pipes,$this->makeRepositPath());
-        proc_close($process);
 
+        $process = proc_open("git checkout -f", $descriptors,$pipes,$this->makeRepositPath());
+        if (is_resource($process)){
+           proc_close($process);
+        }
         $descriptors = $this->getDescriptors();
-        $process = proc_open("git pull --all", $descriptors,$pipes,$this->makeRepositPath());
-        proc_close($process);
+        $process2 = proc_open("git fetch --all", $descriptors,$pipes,$this->makeRepositPath());
+        if (is_resource($process)) {
+            proc_close($process2);
+        }
+        $descriptors = $this->getDescriptors();
+        $process3 = proc_open("git pull --all", $descriptors,$pipes,$this->makeRepositPath());
+        if (is_resource($process)) {
+            proc_close($process3);
+        }
     }
 
     private function checkReposit()
@@ -211,6 +216,46 @@ class Repository
         } else
             $this->updateReposit();
     }
+
+
+    public function getCommitInfoFilesList(){
+        $commitsList = $this->getUserCommits();
+        $res = array();
+        foreach ($commitsList as $commit)
+        {
+            $res[] = array(
+                "sha" => $commit["sha"],
+                "date" => $commit["date"],
+                "files" => $this->getCommitInfoFiles($commit["sha"])
+            );
+        }
+        return $res;
+    }
+
+    public function getCommitInfoFiles($sha)
+    {
+        $this->checkReposit();
+        $descriptors = $this->getDescriptors();
+        $process = proc_open("git show --name-status $sha", $descriptors, $pipes,$this->makeRepositPath());
+        $res = false;
+        if (is_resource($process))
+        {
+                $out = stream_get_contents($pipes[1]);
+                 preg_match("/[\s\S]*\n\n.*\n\n([\s\S]*)/",$out, $matches);
+                 $out = explode("\n",$matches[1]);
+                foreach ($out as $file)
+                {
+                    if (strlen($file))
+                    {
+                        $fileInfo = explode("\t",$file,2);
+                        $res[$fileInfo[0]][] = $fileInfo[1];
+                    }
+                }
+            proc_close($process);
+        }
+    return $res;
+    }
+
 
     public function getUserCommits()
     {

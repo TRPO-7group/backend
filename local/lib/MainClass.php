@@ -1,16 +1,18 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: Алексей
- * Date: 22.10.2017
- * Time: 15:46
- */
 class MainClass
 {
     static $INDIVIDUAL=1;
     static $EDU = 0;
     static $BOTH = 2;
+
+    static public function getDescriptors(){
+        return array(
+            0 => array("pipe", "r"),  // stdin - канал, из которого дочерний процесс будет читать
+            1 => array("pipe", "w"),  // stdout - канал, в который дочерний процесс будет записывать
+            2 => array("pipe", "w") // stderr - файл для записи
+        );
+    }
+
 
     static public function getRepositoryName($url)
     {

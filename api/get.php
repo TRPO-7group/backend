@@ -28,5 +28,18 @@ switch ($_REQUEST["method"])
             $group = true;
         echo json_encode(MainClass::getRepositoryList($type, $group));
         break;
+    case "commit_info_files":
+        if ($_REQUEST["args"]["id"] && $_REQUEST["args"]["sha"]) {
+            $repository->loadById($_REQUEST["args"]["id"]);
+            echo json_encode($repository->getCommitInfoFiles($_REQUEST["args"]["sha"]));
+        }
+        break;
+    case "commit_info_files_list":
+        if ($_REQUEST["args"]["id"])
+        {
+            $repository->loadById($_REQUEST["args"]["id"]);
+            echo json_encode($repository->getCommitInfoFilesList());
+        }
+        break;
     default: echo json_encode("Error");
 }
