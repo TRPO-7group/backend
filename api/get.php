@@ -9,6 +9,7 @@ require_once __DIR__ . "/../local/lib/Repository.php";
 require_once __DIR__ . "/../local/lib/MainClass.php";
 
 $repository = new Repository();
+
 header('Content-Type: application/json');
 
 switch ($_REQUEST["method"])
@@ -28,10 +29,11 @@ switch ($_REQUEST["method"])
             $group = true;
         echo json_encode(MainClass::getRepositoryList($type, $group));
         break;
-    case "commit_info_files":
-        if ($_REQUEST["args"]["id"] && $_REQUEST["args"]["sha"]) {
+    case "commit_info_lines_list":
+        if ($_REQUEST["args"]["id"])
+        {
             $repository->loadById($_REQUEST["args"]["id"]);
-            echo json_encode($repository->getCommitInfoFiles($_REQUEST["args"]["sha"]));
+            echo json_encode($repository->getCommitInfoLinesList());
         }
         break;
     case "commit_info_files_list":

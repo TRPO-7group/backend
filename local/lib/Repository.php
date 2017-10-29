@@ -232,6 +232,43 @@ class Repository
         return $res;
     }
 
+    public function getCommitInfoLinesList(){
+        $commitsList = $this->getUserCommits();
+        $res = false;
+        foreach ($commitsList as $commit)
+        {
+            $res[$commit["sha"]] = $this->getCommitInfoLines($commit["sha"]);
+        }
+        return $res;
+    }
+
+    public function getCommitInfoLines($sha){
+        $descriptors = $this->getDescriptors();
+        $process = proc_open("git show --numstat $sha", $descriptors, $pipes,$this->makeRepositPath());
+        $res = false;
+        if (is_resource($process))
+        {
+            $out = stream_get_contents($pipes[1]);
+            preg_match("/[\s\S]*\n\n.*\n\n([\s\S]*)/",$out, $matches);
+            $out = explode("\n",$matches[1]);
+
+            foreach ($out as $file)
+            {
+                if (strlen($file))
+                {
+                    $fileInfo = explode("\t",$file,3);
+                    $res[] = array(
+                        "file_name" => $fileInfo[2],
+                        "add" => $fileInfo[0],
+                        "delete" => $fileInfo[1]
+                    );
+                }
+
+            }
+        }
+        return $res;
+    }
+
     public function getCommitInfoFiles($sha)
     {
         $this->checkReposit();
@@ -270,6 +307,7 @@ class Repository
             $res = array();
             while(!feof($pipes[1]))
             {
+
                 $line = stream_get_line($pipes[1],5000,"\nnext-commit:");
 
                 $message = explode("|",$line,4);

@@ -27,3 +27,10 @@ method - commit_info_files_list
 args[id] - id репозитория
 возвращает коммиты и измененные файлы по ним (A - файл добавлен, M - файл изменен, D - файл удален)
 /reposit-catalog/api/get.php?method=commit_info_files_list&args[id]=2
+
+4.
+Список файлов с количеством добавленных и удаленных строк
+method - commit_info_lines_list
+args[id] - id репозитория
+По каждому коммиту за прошедший месяц возвращает список измененных файлов и количество добавленных и удаленных строк в каждом
+/reposit-catalog/api/get.php?method=commit_info_lines_list&args[id]=1
