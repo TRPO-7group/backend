@@ -1,4 +1,5 @@
 <?php
+require_once "php_init.php";
 require_once "dbconf.php";
 require_once "MainClass.php";
 require_once "Cache.php";
