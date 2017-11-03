@@ -69,7 +69,7 @@ class MainClass
         $where = "";
         if ($type != MainClass::$BOTH)
         {
-            $where = "WHERE rep.is_ind = $type";
+            $where = "rep.is_ind=$type";
         }
 
         $list = MainClass::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage);

@@ -189,8 +189,8 @@ class Repository
 
     private function updateReposit()
     {
-        $descriptors = $this->getDescriptors();
 
+        $descriptors = $this->getDescriptors();
         $process = proc_open("git checkout -f", $descriptors,$pipes,$this->makeRepositPath());
         if (is_resource($process)){
            proc_close($process);
