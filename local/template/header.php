@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="WINDOWS-1251">
+    <meta charset="utf-8">
     <title>Title</title>
     <link rel="stylesheet" href="/reposit-catalog/local/markup/main.css" type="text/css"/>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
