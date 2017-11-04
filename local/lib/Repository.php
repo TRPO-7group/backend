@@ -189,24 +189,32 @@ class Repository
 
     private function updateReposit()
     {
-
+        $obCache = new Cache();
+        $res = $obCache->load("repository_update_" . $this->getId());
+        if (!$res)
+        {
+            $obCache->save("repository_update_" . $this->getId(),1,30);
+        }
+        else
+            return;
         $descriptors = $this->getDescriptors();
         $process = proc_open("git checkout -f", $descriptors,$pipes,$this->makeRepositPath());
         if (is_resource($process)){
-
+            stream_get_contents($pipes[1]);
            proc_close($process);
         }
         $descriptors = $this->getDescriptors();
         $process2 = proc_open("git fetch --all", $descriptors,$pipes,$this->makeRepositPath());
 
         if (is_resource($process2)) {
-
+            stream_get_contents($pipes[1]);
             proc_close($process2);
         }
         $descriptors = $this->getDescriptors();
         $process3 = proc_open("git pull --all", $descriptors,$pipes,$this->makeRepositPath());
 
         if (is_resource($process3)){
+            stream_get_contents($pipes[1]);
             proc_close($process3);
         }
        }
