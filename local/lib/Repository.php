@@ -193,16 +193,20 @@ class Repository
         $descriptors = $this->getDescriptors();
         $process = proc_open("git checkout -f", $descriptors,$pipes,$this->makeRepositPath());
         if (is_resource($process)){
+
            proc_close($process);
         }
         $descriptors = $this->getDescriptors();
         $process2 = proc_open("git fetch --all", $descriptors,$pipes,$this->makeRepositPath());
-        if (is_resource($process)) {
+
+        if (is_resource($process2)) {
+
             proc_close($process2);
         }
         $descriptors = $this->getDescriptors();
         $process3 = proc_open("git pull --all", $descriptors,$pipes,$this->makeRepositPath());
-        if (is_resource($process)) {
+
+        if (is_resource($process3)){
             proc_close($process3);
         }
        }
