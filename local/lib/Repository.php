@@ -184,7 +184,7 @@ class Repository
         $this->setIndividual($res['is_ind']);
         $this->setOwner($res['rep_owner']);
         $this->setParentRep($res['pater_rep']);
-
+    return true;
     }
 
     private function updateReposit()
@@ -224,11 +224,7 @@ class Repository
         $res = array();
         foreach ($commitsList as $commit)
         {
-            $res[] = array(
-                "sha" => $commit["sha"],
-                "date" => $commit["date"],
-                "files" => $this->getCommitInfoFiles($commit["sha"])
-            );
+            $res[$commit["sha"]] = $this->getCommitInfoFiles($commit["sha"]);
         }
         return $res;
     }
@@ -332,5 +328,9 @@ class Repository
             return $res;
         }
         return false;
+    }
+
+    public function getLink(){
+        return "/reposit-catalog/detail.php?id=" . $this->getId();
     }
 }

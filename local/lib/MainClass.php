@@ -96,7 +96,8 @@ class MainClass
                 "owner" => $row["rep_owner"],
                 "discipline" => $row['name'],
                 "last_commit" => $commits[0]["date"],
-                "tegs" => $tegs
+                "tegs" => $tegs,
+                "link" => $rep->getLink()
             );
 
             if ($group)

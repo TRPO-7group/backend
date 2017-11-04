@@ -13,7 +13,7 @@
             ?>
             <div class="list-elem">
         <div class="list-elem-name">
-            <a href="#">
+            <a href="<?php echo $item["link"]?>">
                 <?php echo $item["name"]?>
 </a>
         </div>

@@ -15,7 +15,7 @@
         ?>
         <div class="list-elem">
         <div class="list-elem-name">
-            <a href="#">
+            <a href="<?php echo $reposit["link"]?>">
                 <?php echo $reposit['name']?>
             </a>
         </div>
