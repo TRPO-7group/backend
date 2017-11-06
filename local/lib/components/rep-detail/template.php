@@ -20,7 +20,7 @@
                 <th>Удалено</th>
             </tr>
             <tr>
-                <td><div class="popup-title" data-title="<?php echo $arResult["files_add_for_popup"]?>"><?php echo $arResult["all_files_add"]?></div></td>
+                <td><?php echo $arResult["all_files_add"]?></td>
                 <td><?php echo $arResult["all_files_modified"]?></td>
                 <td><?php echo $arResult["all_files_delete"]?></td>
             </tr>
@@ -44,9 +44,9 @@
 
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart<?php echo $arResult["repository_id"]?>);
 
-        function drawChartCommits() {
+        function drawChartCommits<?php echo $arResult["repository_id"]?>() {
             var data = google.visualization.arrayToDataTable([
                 ['Дата', 'Количество коммитов'],
                 <?php echo $arResult["js_commits"]?>
@@ -56,12 +56,12 @@
                 title: 'Количество коммитов',
                 legend: { position: 'bottom' }
             };
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart_files'));
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart_files<?php echo $arResult["repository_id"]?>'));
             chart.draw(data, options);
         }
 
 
-        function drawChartFiles() {
+        function drawChartFiles<?php echo $arResult["repository_id"]?>() {
             var data = google.visualization.arrayToDataTable([
                 ['День', 'Добавлено', 'Изменено', 'Удалено'],
                 <?php echo $arResult["js_files"]?>
@@ -71,12 +71,12 @@
                 title: 'Файлы',
                 legend: { position: 'bottom' }
             };
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart_commit'));
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart_commit<?php echo $arResult["repository_id"]?>'));
             chart.draw(data, options);
         }
 
 
-        function drawChartLines() {
+        function drawChartLines<?php echo $arResult["repository_id"]?>() {
             var data = google.visualization.arrayToDataTable([
                 ['День', 'Добавлено', 'Удалено'],
                 <?php echo $arResult["js_lines"]?>
@@ -86,18 +86,18 @@
                 title: 'Строки',
                 legend: { position: 'bottom' }
             };
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart_lines'));
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart_lines<?php echo $arResult["repository_id"]?>'));
             chart.draw(data, options);
         }
 
-        function drawChart() {
-            drawChartCommits();
-            drawChartFiles();
-            drawChartLines();
+        function drawChart<?php echo $arResult["repository_id"]?>() {
+            drawChartCommits<?php echo $arResult["repository_id"]?>();
+            drawChartFiles<?php echo $arResult["repository_id"]?>();
+            drawChartLines<?php echo $arResult["repository_id"]?>();
 
         }
     </script>
-    <div id="curve_chart_commit" style="width: 500px; height: 300px; display: inline-block"></div>
-    <div id="curve_chart_files" style="width: 500px; height: 300px; display: inline-block"></div>
-    <div id="curve_chart_lines" style="width: 500px; height: 300px; display: inline-block"></div>
+    <div id="curve_chart_commit<?php echo $arResult["repository_id"]?>" style="width: 370px; height: 200px; display: inline-block"></div>
+    <div id="curve_chart_files<?php echo $arResult["repository_id"]?>" style="width: 370px; height: 200px; display: inline-block"></div>
+    <div id="curve_chart_lines<?php echo $arResult["repository_id"]?>" style="width: 370px; height: 200px; display: inline-block"></div>
 </div>

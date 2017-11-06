@@ -345,4 +345,19 @@ class Repository
     public function getLink(){
         return "/reposit-catalog/detail.php?id=" . $this->getId();
     }
+
+    public function getChildReps()
+    {
+        $listReps = MainClass::getList("rep","*",array('user' => array("rep.rep_owner", "user.user_id")),"rep.pater_rep=" . $this->getId());
+        $res = array();
+        foreach ($listReps as $member)
+        {
+            $res[] = array(
+                "rep_id" => $member["rep_id"],
+                "user_name" => $member["name"],
+                "user_id" => $member["user_id"]
+            );
+        }
+        return $res;
+    }
 }

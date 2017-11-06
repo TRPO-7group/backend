@@ -8,12 +8,14 @@ if ($params['id'] <= 0 || !$rep->loadById($params['id']))
 $cache = new Cache();
 $arResult = $cache->load("detail_" . $params['id']);
 if (!$arResult) {
+    $arResult["repository_id"] = $rep->getId();
     $arResult["repository_name"] = $rep->getName();
     $arResult["repository_description"] = $rep->getDescription();
     $arResult["repository_url"] = $rep->getUrl();
     $arResult['commits_list'] = $rep->getUserCommits();
     $arResult['commits_lines'] = $rep->getCommitInfoLinesList();
     $arResult['commits_files'] = $rep->getCommitInfoFilesList();
+    $arResult["repository_owner"] = $rep->getOwner();
 
     $dateNow = new DateTime();
 
