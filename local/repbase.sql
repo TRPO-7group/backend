@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Окт 22 2017 г., 18:42
+-- Время создания: Ноя 06 2017 г., 12:35
 -- Версия сервера: 5.7.19-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.22-0ubuntu0.16.04.1
 
@@ -37,7 +37,10 @@ CREATE TABLE `disc` (
 
 INSERT INTO `disc` (`id`, `name`) VALUES
 (1, 'Структуры данных и алгоритмы'),
-(2, 'Программирование на JAVA');
+(2, 'Программирование на JAVA'),
+(3, 'Вычислительные машины системы и сети'),
+(4, 'Разработка мобильных приложений'),
+(5, 'Веб-разработка');
 
 -- --------------------------------------------------------
 
@@ -61,7 +64,20 @@ CREATE TABLE `rep` (
 
 INSERT INTO `rep` (`rep_id`, `rep_url`, `rep_description`, `is_ind`, `pater_rep`, `rep_owner`, `rep_disc`) VALUES
 (1, 'https://github.com/TRPO-7group/markup.git', 'Версточка', 0, NULL, NULL, 1),
-(2, 'https://github.com/TRPO-7group/backend.git', 'Бэкенд', 1, NULL, NULL, 2);
+(2, 'https://github.com/TRPO-7group/backend.git', 'Бэкенд', 1, NULL, NULL, 2),
+(3, 'https://github.com/seclab-ucr/INTANG.git', NULL, 0, NULL, NULL, 3),
+(4, 'https://github.com/SparkPost/heml.git', NULL, 1, NULL, NULL, 1),
+(5, 'https://github.com/yishn/tikzcd-editor.git', NULL, 1, NULL, NULL, 3),
+(6, 'https://github.com/thedaviddias/Front-End-Checklist.git', NULL, 1, NULL, NULL, 4),
+(7, 'https://github.com/BalestraPatrick/WhatsNew.git', NULL, 1, NULL, NULL, 4),
+(8, 'https://github.com/matterport/Mask_RCNN.git', NULL, 0, NULL, NULL, 3),
+(9, 'https://github.com/ausi/slug-generator.git', NULL, 1, NULL, NULL, 1),
+(10, 'https://github.com/d-plaindoux/masala-parser.git', NULL, 0, NULL, NULL, 5),
+(11, 'https://github.com/neugram/ng.git', NULL, 0, NULL, NULL, 1),
+(12, 'https://github.com/tensorflow/tensorflow.git', NULL, 1, NULL, NULL, 1),
+(13, 'https://github.com/android/kotlin-guides.git', NULL, 1, NULL, NULL, 5),
+(14, 'https://github.com/ignoreintuition/jSchema.git', NULL, 0, NULL, NULL, 2),
+(15, 'https://github.com/JetBrains/kotlinconf-app.git', NULL, 1, NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -82,7 +98,20 @@ CREATE TABLE `reptegs` (
 INSERT INTO `reptegs` (`id`, `repid`, `tegid`) VALUES
 (1, 1, 1),
 (2, 1, 2),
-(3, 2, 2);
+(3, 2, 2),
+(4, 3, 3),
+(7, 4, 5),
+(8, 5, 4),
+(9, 6, 6),
+(10, 7, 7),
+(11, 8, 8),
+(12, 9, 9),
+(13, 10, 7),
+(14, 11, 5),
+(15, 12, 9),
+(16, 13, 10),
+(17, 14, 11),
+(18, 15, 7);
 
 -- --------------------------------------------------------
 
@@ -101,7 +130,16 @@ CREATE TABLE `teg` (
 
 INSERT INTO `teg` (`teg_id`, `teg_name`) VALUES
 (1, 'quartus'),
-(2, 'big data');
+(2, 'big data'),
+(3, 'TCP'),
+(4, 'Создание диаграмм'),
+(5, 'Новый язык'),
+(6, 'Front-End Checklist'),
+(7, 'Mobile app'),
+(8, 'Обнаружение объектов'),
+(9, 'Библиотека'),
+(10, 'Сайт'),
+(11, 'Моделирование данных');
 
 -- --------------------------------------------------------
 
@@ -163,22 +201,22 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `disc`
 --
 ALTER TABLE `disc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `rep`
 --
 ALTER TABLE `rep`
-  MODIFY `rep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT для таблицы `reptegs`
 --
 ALTER TABLE `reptegs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT для таблицы `teg`
 --
 ALTER TABLE `teg`
-  MODIFY `teg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `teg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --

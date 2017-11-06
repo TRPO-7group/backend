@@ -5,6 +5,8 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 */
+if (!$_SERVER["DOCUMENT_ROOT"] )
+    $_SERVER["DOCUMENT_ROOT"] = "/var/www/html";
 define("SERVER_PATH_ROOT", $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog");
 define("COMPONENT_PATH", SERVER_PATH_ROOT . "/local/lib/components");
 require_once "dbconf.php";

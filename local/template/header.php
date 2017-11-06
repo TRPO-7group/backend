@@ -14,7 +14,7 @@
     <div class="header-section">
 
         <div class="header-logo">
-            <img src="/reposit-catalog/local/markup/img/Git-Icon-Black.png">
+            <img src="/reposit-catalog/local/markup/img/Git-Icon-White.png">
         </div>
         <div class="header-user">
             <div class="header-user-info">

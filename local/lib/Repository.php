@@ -133,7 +133,7 @@ class Repository
 
     private function makeStoragePath()
     {
-        return $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog/storage/" . $this->getName() . "_" . md5($this->getUrl());
+        return SERVER_PATH_ROOT . "/storage/" . $this->getName() . "_" . md5($this->getUrl());
     }
 
     private function makeRepositPath()
@@ -187,13 +187,14 @@ class Repository
     return true;
     }
 
-    private function updateReposit()
+    public function updateReposit()
     {
+        if (!file_exists($this->makeRepositPath())) return;
         $obCache = new Cache();
         $res = $obCache->load("repository_update_" . $this->getId());
         if (!$res)
         {
-            $obCache->save("repository_update_" . $this->getId(),1,30);
+            $obCache->save("repository_update_" . $this->getId(),1,30*30);
         }
         else
             return;
@@ -226,8 +227,7 @@ class Repository
         {
             mkdir($this->makeStoragePath());
             return $this->cloneReposit();
-        } else
-            $this->updateReposit();
+        }
     }
 
 
