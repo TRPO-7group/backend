@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Ноя 06 2017 г., 12:35
+-- Время создания: Ноя 06 2017 г., 19:24
 -- Версия сервера: 5.7.19-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.22-0ubuntu0.16.04.1
 
@@ -64,9 +64,9 @@ CREATE TABLE `rep` (
 
 INSERT INTO `rep` (`rep_id`, `rep_url`, `rep_description`, `is_ind`, `pater_rep`, `rep_owner`, `rep_disc`) VALUES
 (1, 'https://github.com/TRPO-7group/markup.git', 'Версточка', 0, NULL, NULL, 1),
-(2, 'https://github.com/TRPO-7group/backend.git', 'Бэкенд', 1, NULL, NULL, 2),
-(3, 'https://github.com/seclab-ucr/INTANG.git', NULL, 0, NULL, NULL, 3),
-(4, 'https://github.com/SparkPost/heml.git', NULL, 1, NULL, NULL, 1),
+(2, 'https://github.com/TRPO-7group/backend.git', 'Бэкенд', 0, NULL, NULL, 2),
+(3, 'https://github.com/seclab-ucr/INTANG.git', NULL, 0, 2, 1, 3),
+(4, 'https://github.com/SparkPost/heml.git', NULL, 1, 2, 2, 1),
 (5, 'https://github.com/yishn/tikzcd-editor.git', NULL, 1, NULL, NULL, 3),
 (6, 'https://github.com/thedaviddias/Front-End-Checklist.git', NULL, 1, NULL, NULL, 4),
 (7, 'https://github.com/BalestraPatrick/WhatsNew.git', NULL, 1, NULL, NULL, 4),
@@ -150,8 +150,17 @@ INSERT INTO `teg` (`teg_id`, `teg_name`) VALUES
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `user_mail` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
-  `user_type` varchar(20) CHARACTER SET latin1 DEFAULT NULL
+  `user_type` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
+  `name` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `user`
+--
+
+INSERT INTO `user` (`user_id`, `user_mail`, `user_type`, `name`) VALUES
+(1, 'aa@mail.ru', NULL, 'Вася'),
+(2, 'bb@mail.ru', NULL, 'Петя');
 
 --
 -- Индексы сохранённых таблиц
@@ -221,7 +230,7 @@ ALTER TABLE `teg`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
