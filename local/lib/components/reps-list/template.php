@@ -5,7 +5,7 @@
 </script>
 <div class="list">
     <div class="all">
-        Всего <?php echo count($arResult['items'])?> <?php echo MainClass::getWord(count($arResult['items']), array("репозиторий", "репозитория", "репозиториев"));?>
+        Всего <?php echo $arResult["cnt"]?> <?php echo MainClass::getWord(count($arResult['items']), array("репозиторий", "репозитория", "репозиториев"));?>
     </div>
     <hr>
     <?php

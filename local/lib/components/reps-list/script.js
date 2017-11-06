@@ -1,6 +1,7 @@
+
 $(document).on("click", ".load-button button", function (e) {
     var url=$(this).data('url');
-    console.log(url);
+    $(this).attr("disabled",true);
     $.ajax({
         url: url,
         success: function(data) {
@@ -10,6 +11,7 @@ $(document).on("click", ".load-button button", function (e) {
             }
             if ($(data).find(".load-button").length == 0)
                 $(".load-button").remove();
+            $(this).removeAttr("disabled");
         }
     });
 

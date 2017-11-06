@@ -1,6 +1,6 @@
 <div class="detail-container">
     <h3 class="detail-statistic"><?php echo $params["owner_name"]?><span>[+]</span></h3>
-    <div class="detail-commits-all">
+    <div>
         <h5>Статистика за последний месяц</h5>
         <div>
             <div>
@@ -36,6 +36,7 @@
             </table>
         </div>
         <script type="text/javascript">
+            var loadingCount = 0;
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart<?php echo $arResult["repository_id"]?>);
 
@@ -50,6 +51,7 @@
                     legend: { position: 'bottom' }
                 };
                 var chart = new google.visualization.LineChart(document.getElementById('curve_chart_files<?php echo $arResult["repository_id"]?>'));
+                google.visualization.events.addListener(chart, 'ready', loadListener);
                 chart.draw(data, options);
             }
 
@@ -65,7 +67,9 @@
                     legend: { position: 'bottom' }
                 };
                 var chart = new google.visualization.LineChart(document.getElementById('curve_chart_commit<?php echo $arResult["repository_id"]?>'));
+                google.visualization.events.addListener(chart, 'ready', loadListener);
                 chart.draw(data, options);
+
             }
 
 
@@ -80,6 +84,7 @@
                     legend: { position: 'bottom' }
                 };
                 var chart = new google.visualization.LineChart(document.getElementById('curve_chart_lines<?php echo $arResult["repository_id"]?>'));
+                google.visualization.events.addListener(chart, 'ready', loadListener);
                 chart.draw(data, options);
             }
 
@@ -89,9 +94,24 @@
                 drawChartLines<?php echo $arResult["repository_id"]?>();
 
             }
+            
+            function loadListener() {
+                loadingCount++;
+                if (loadingCount >= $(".detail-container").length * 3) //количество диаграмм на странице
+                {
+                    $(".detail-container > div").addClass("detail-commits-all");
+                    setTimeout(function () {
+                        $(".back").removeClass("loader");
+                        $("#loader").hide();
+                    },100);
+                }
+            }
+
+            
         </script>
         <div id="curve_chart_commit<?php echo $arResult["repository_id"]?>" style="width: 370px; height: 200px; display: inline-block"></div>
         <div id="curve_chart_files<?php echo $arResult["repository_id"]?>" style="width: 370px; height: 200px; display: inline-block"></div>
         <div id="curve_chart_lines<?php echo $arResult["repository_id"]?>" style="width: 370px; height: 200px; display: inline-block;"></div>
     </div>
 </div>
+<hr>

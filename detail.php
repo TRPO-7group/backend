@@ -1,4 +1,4 @@
-<?php require $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog/local/template/header.php";?>
+<?php require $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog/local/template/loader/header.php";?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <?php
 $rep = new Repository();
@@ -12,4 +12,4 @@ else
 }
 ?>
 
-<?php require $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog/local/template/footer.php";?>
+<?php require $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog/local/template/loader/footer.php";?>
