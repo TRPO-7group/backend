@@ -194,7 +194,7 @@ class Repository
         $res = $obCache->load("repository_update_" . $this->getId());
         if (!$res)
         {
-            $obCache->save("repository_update_" . $this->getId(),1,30*30);
+            $obCache->save("repository_update_" . $this->getId(),1,30*60);
         }
         else
             return;

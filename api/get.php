@@ -1,8 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../local/php-github-api/vendor/autoload.php";
-require_once __DIR__ . "/../local/lib/Repository.php";
-require_once __DIR__ . "/../local/lib/MainClass.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog/local/lib/php_init.php";
 
 $repository = new Repository();
 
