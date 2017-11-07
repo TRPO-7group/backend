@@ -1,7 +1,6 @@
 <div class="detail-container">
     <h3 class="detail-statistic"><?php echo $params["owner_name"]?><span>[+]</span></h3>
     <div>
-        <h5>Статистика за последний месяц</h5>
         <div>
             <div>
                 Коммитов за последний месяц:  <?php echo count($arResult["commits_list"]);?>
@@ -95,17 +94,7 @@
 
             }
             
-            function loadListener() {
-                loadingCount++;
-                if (loadingCount >= $(".detail-container").length * 3) //количество диаграмм на странице
-                {
-                    $(".detail-container > div").addClass("detail-commits-all");
-                    setTimeout(function () {
-                        $(".back").removeClass("loader");
-                        $("#loader").hide();
-                    },100);
-                }
-            }
+
 
             
         </script>

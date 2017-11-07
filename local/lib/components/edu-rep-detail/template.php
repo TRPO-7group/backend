@@ -1,3 +1,6 @@
+<script>
+    <?php require "script.js";?>
+    </script>
 <div class="title">
     <h1><?php echo $arResult["repository_name"];?></h1>
     <div class="detail-description">
