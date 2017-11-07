@@ -258,8 +258,8 @@ class Repository
         if (is_resource($process))
         {
             $out = stream_get_contents($pipes[1]);
-            preg_match("/[\s\S]*\n\n.*\n\n([\s\S]*)/",$out, $matches);
-            $out = explode("\n",$matches[1]);
+            preg_match("/\n(\n(\d+)\t+(\d+)\t+(.*))+$/",$out, $matches);
+            $out = explode("\n",$matches[0]);
 
             foreach ($out as $file)
             {
@@ -287,8 +287,8 @@ class Repository
         if (is_resource($process))
         {
                 $out = stream_get_contents($pipes[1]);
-                 preg_match("/[\s\S]*\n\n.*\n\n([\s\S]*)/",$out, $matches);
-                 $out = explode("\n",$matches[1]);
+                 preg_match("/\n(\n([A-Z]+)\t+(.*))+$/",$out, $matches);
+                 $out = explode("\n",$matches[0]);
                 foreach ($out as $file)
                 {
                     if (strlen($file))
