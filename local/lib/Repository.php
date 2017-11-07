@@ -236,7 +236,9 @@ class Repository
         $res = array();
         foreach ($commitsList as $commit)
         {
-            $res[$commit["sha"]] = $this->getCommitInfoFiles($commit["sha"]);
+            $result = $this->getCommitInfoFiles($commit["sha"]);
+            if ($result)
+                $res[$commit["sha"]] = $result;
         }
         return $res;
     }
@@ -246,7 +248,9 @@ class Repository
         $res = false;
         foreach ($commitsList as $commit)
         {
-            $res[$commit["sha"]] = $this->getCommitInfoLines($commit["sha"]);
+            $result = $this->getCommitInfoLines($commit["sha"]);
+            if ($result)
+                $res[$commit["sha"]] = $result;
         }
         return $res;
     }
