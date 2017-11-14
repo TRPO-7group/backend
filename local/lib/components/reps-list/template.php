@@ -30,6 +30,6 @@
 if ($arResult["exist_next_page"]){
 ?>
 <div class="load-button">
-    <button data-url="<?php echo $arResult['next_page']?>"><img src="/reposit-catalog/local/markup/img/update.png">Загрузить еще</button>
+    <button data-url="<?php echo $arResult['next_page']?>"><img src="/reposit-catalog/local/markup/build/img/update.png">Загрузить еще</button>
 </div>
 <?php }?>

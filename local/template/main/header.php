@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/reposit-catalog/local/markup/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/reposit-catalog/local/markup/build/default.css" type="text/css"/>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="/reposit-catalog/local/markup/main.js"></script>
+    <script src="/reposit-catalog/local/markup/build/js/main.js"></script>
 </head>
 <div class="back">
 </div>
@@ -14,7 +14,7 @@
     <div class="header-section">
 
         <div class="header-logo">
-            <img src="/reposit-catalog/local/markup/img/Git-Icon-White.png">
+            <img src="/reposit-catalog/local/markup/build/img/Git-Icon-White.png">
         </div>
         <div class="header-user">
             <div class="header-user-info">
@@ -29,14 +29,14 @@
                 </div>
             </div>
             <div class="header-user-logo">
-                <img src="/reposit-catalog//local/markup/img/blank-person-390x390.png">
+                <img src="/reposit-catalog//local/markup/build/img/blank-person-390x390.png">
             </div>
         </div>
         <div class="header-bottom-section">
             <div class="header-menu">
                 <a href="/reposit-catalog/">Личные репозитории</a>
                 <a href="/reposit-catalog/edu.php">Учебные репозитории</a>
-                <img src="/reposit-catalog//local/markup/img/search.png" class="js-popup-search">
+                <img src="/reposit-catalog//local/markup/build/img/search.png" class="js-popup-search">
             </div>
         </div>
     </div>
