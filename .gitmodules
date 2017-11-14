@@ -1,6 +1,3 @@
 [submodule "local/markup"]
 	path = local/markup
 	url = https://github.com/TRPO-7group/markup.git
-[submodule "local/lib/PHPoAuthLib"]
-	path = local/lib/PHPoAuthLib
-	url = https://github.com/Lusitanian/PHPoAuthLib.git
