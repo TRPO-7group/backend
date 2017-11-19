@@ -96,8 +96,8 @@ $servicesCredentials = array(
         'secret'    => '',
     ),
     'google' => array(
-        'key'       => '287027464721-ajv5p8cd2reu6k0v2a63aibbt4calsgh.apps.googleusercontent.com',
-        'secret'    => '1JWUvbwrnr9vhDzSDQQPcBGH',
+        'key'       => '287027464721-g64htt8sacp1imiasi2ram7qca5akh7a.apps.googleusercontent.com',
+        'secret'    => 'LYLbYjCiJ8Da-FlAwPjxAsxO',
     ),
     'hubic' => array(
         'key'       => '',

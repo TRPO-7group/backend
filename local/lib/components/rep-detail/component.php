@@ -1,6 +1,6 @@
 <?php
 $rep = new Repository();
-if ($params['id'] <= 0 || !$rep->loadById($params['id']))
+if ($params['id'] <= 0 || !$rep->loadById(intval($params['id'])))
 {
     header("HTTP/1.1 404 Not Found");
     die;
