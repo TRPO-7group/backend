@@ -352,7 +352,7 @@ class Repository
 
     public function getChildReps()
     {
-        $listReps = MainClass::getList("rep","*",array('user' => array("rep.rep_owner", "user.user_id")),"rep.pater_rep=" . $this->getId());
+        $listReps = DB::getList("rep","*",array('user' => array("rep.rep_owner", "user.user_id")),"rep.pater_rep=" . $this->getId());
         $res = array();
         foreach ($listReps as $member)
         {

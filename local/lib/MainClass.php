@@ -5,6 +5,14 @@ class MainClass
     static $EDU = 0;
     static $BOTH = 2;
 
+    static $USER_TYPE_STUDENT = 0;
+    static $USER_TYPE_TEACHER = 1;
+
+
+    static $REP_USER_STATUS_NOT_INVITED = 0;
+    static $REP_USER_STATUS_INVITED = 1;
+    static $REP_USER_STATUS_ACCEPTED = 2;
+
     static public function getDescriptors(){
         return array(
             0 => array("pipe", "r"),  // stdin - канал, из которого дочерний процесс будет читать
@@ -21,49 +29,6 @@ class MainClass
     }
 
 
-    static public function getOffset($page, $count){
-        return array(
-            "offset" => ($page-1) * $count,
-            "limit" => $count
-        );
-    }
-
-    static public function getList($table, $select ="*", $join=false, $where=false, $page=false, $countOnPage=false, &$existNextPage)
-    {
-        $query = "SELECT $select FROM $table";
-        if ($join)
-        {
-            foreach ($join as $key => $item) {
-                $query .= " INNER JOIN $key ON ($item[0]=$item[1])";
-            }
-        }
-        if ($where)
-            $query .= " WHERE $where";
-        if ($page>0 && $countOnPage>0)
-        {
-            $offset = MainClass::getOffset($page,$countOnPage);
-            $query .= " LIMIT " . ($offset['limit'] + 1) . " OFFSET " . $offset['offset'];
-        }
-        $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
-        $mysqli->set_charset("utf8");
-        $q = $mysqli->query($query);
-        $res = array();
-        $count = 0;
-        $existNextPage = false;
-        while ($row = $q->fetch_assoc())
-        {
-            $count++;
-            if ($page>0 && $countOnPage>0 && $count > $countOnPage)
-            {
-                $existNextPage = true;
-                break;
-            }
-            $res[] = $row;
-        }
-        $mysqli->close();
-    return $res;
-    }
-
     static  public function getRepositoryList($type = 2, $group = true, $page = false, $countOnPage=false, &$existNextPage = false)
     {
         $where = "";
@@ -72,13 +37,13 @@ class MainClass
             $where = "rep.is_ind=$type";
         }
 
-        $list = MainClass::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage);
+        $list = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage);
         $res = array();
         foreach ($list as $row) {
             $rep = new Repository();
             $rep->loadById($row["rep_id"]);
             $commits = $rep->getUserCommits();
-            $tegsList = MainClass::getList("reptegs","*",
+            $tegsList = DB::getList("reptegs","*",
                 array("teg" => array("reptegs.tegid", "teg.teg_id")),
                 "repid=".$row["rep_id"]
                 );
@@ -124,6 +89,22 @@ class MainClass
             $template = "template";
         }
         require COMPONENT_PATH . "/$component/component.php";
+    }
+
+
+    public static function addInvite($rep_id, $user_id)
+    {
+        $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+        $mysqli->set_charset("utf8");
+        $list = DB::getList("rep_user_status","id, status",false,"rep_id=$rep_id AND user_id=$user_id");
+        if (count($list) > 0 && $list[0]['status'] == MainClass::$REP_USER_STATUS_NOT_INVITED)
+        {
+            $mysqli->query("ALTER TABLE rep_user_status SET status=" . MainClass::$REP_USER_STATUS_INVITED . " WHERE rep_id=$rep_id && user_id=$user_id");
+        } else if (count($list) == 0)
+        {
+
+        }
+        $mysqli->close();
     }
 
 

@@ -10,6 +10,7 @@ if (!$_SERVER["DOCUMENT_ROOT"] )
 define("SERVER_PATH_ROOT", $_SERVER["DOCUMENT_ROOT"] . "/reposit-catalog");
 define("COMPONENT_PATH", SERVER_PATH_ROOT . "/local/lib/components");
 require_once "dbconf.php";
+require_once "DB.php";
 require_once "MainClass.php";
 require_once "Repository.php";
 require_once "Cache.php";
