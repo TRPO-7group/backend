@@ -37,5 +37,12 @@ switch ($_REQUEST["method"])
             echo json_encode($repository->getCommitInfoFilesList());
         }
         break;
+    case "rep_info":
+        if ($_REQUEST["args"]["id"])
+        {
+            $repository->loadById($_REQUEST["args"]["id"]);
+            echo json_encode($repository->getRepInfo());
+        }
+        break;
     default: echo json_encode("Error");
 }

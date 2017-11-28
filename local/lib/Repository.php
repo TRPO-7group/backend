@@ -163,6 +163,7 @@ class Repository
 
     public function loadById($id)
     {
+        $id = intval($id);
         $oCache = new Cache();
         $res = $oCache->load("repository_" . $id);
         if (!$res) {
@@ -180,7 +181,7 @@ class Repository
         $this->setId($res['rep_id']);
         $this->setUrl($res['rep_url']);
         $this->setDescription($res['rep_description']);
-        $this->setDiscpline($res['rep_disp']);
+        $this->setDiscpline($res['rep_disc']);
         $this->setIndividual($res['is_ind']);
         $this->setOwner($res['rep_owner']);
         $this->setParentRep($res['pater_rep']);
@@ -363,5 +364,34 @@ class Repository
             );
         }
         return $res;
+    }
+
+    public function getRepInfo()
+    {
+
+        $commits = $this->getUserCommits();
+        $discipline_name = null;
+
+        if ($this->getDiscpline()) {
+            $obCache = new Cache();
+            $discipline_name = $obCache->load("disciplines_" . $this->getDiscpline(),"disciplines");
+            if (!$discipline_name) {
+                $disciplines = DB::getList("disc", "*", false, "id=" . $this->getDiscpline());
+                $discipline_name = $disciplines[0]["name"];
+                $obCache->save("disciplines_" . $this->getDiscpline(),$discipline_name,3600,"disciplines");
+            }
+
+        }
+
+        return array(
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "description" => $this->getDescription(),
+            "is_individual" => $this->getIndividual(),
+            "owner" => $this->getOwner(),
+            "url" => $this->getUrl(),
+            "discipline" => array("id" => $this->getDiscpline(), "name" => $discipline_name),
+            "last_commit" => $commits[0]["date"]
+        );
     }
 }

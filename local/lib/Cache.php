@@ -5,13 +5,22 @@ class Cache{
         $this->_cacheFolder = $_SERVER["DOCUMENT_ROOT"] . '/reposit-catalog/cache/';
     }
 
+    private function checkDir($dir)
+    {
+      if (!file_exists($this->_cacheFolder  . $dir . "/"))
+          mkdir($this->_cacheFolder . $dir . "/",0775);
+      return $this->_cacheFolder . $dir . "/";
+    }
     /**
      * чтение
      *
      * @param mixed $key
      */
-    public function load($key){
-        $file = $this->_cacheFolder . md5($key);
+    public function load($key, $dir=false){
+        if ($dir)
+            $file = $this->checkDir($dir) . md5($key);
+        else
+                $file = $this->_cacheFolder . md5($key);
         if(file_exists($file)){
             $data = unserialize(file_get_contents($file));
 
@@ -31,8 +40,11 @@ class Cache{
      * @param mixed $data
      * @param mixed $time
      */
-    public function save($key, $data, $time){
-        $file = $this->_cacheFolder . md5($key);
+    public function save($key, $data, $time, $dir = false){
+        if ($dir)
+            $file = $this->checkDir($dir) . md5($key);
+        else
+            $file = $this->_cacheFolder . md5($key);
         $content['data'] = $data;
         $content['time'] = time();
         $content['ttl'] = $time;
@@ -48,8 +60,11 @@ class Cache{
      *
      * @param mixed $key
      */
-    public function remove($key){
-        $file = $this->_cacheFolder . md5($key);
+    public function remove($key, $dir=false){
+        if ($dir)
+            $file = $this->checkDir($dir) . md5($key);
+        else
+            $file = $this->_cacheFolder . md5($key);
         if(file_exists($file)){
             unlink($file);
         }

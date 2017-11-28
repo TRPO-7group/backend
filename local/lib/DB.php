@@ -22,7 +22,7 @@ class DB{
 
         if ($page>0 && $countOnPage>0)
         {
-            $offset = MainClass::getOffset($page,$countOnPage);
+            $offset = DB::getOffset($page,$countOnPage);
             $query .= " LIMIT " . ($offset['limit'] + 1) . " OFFSET " . $offset['offset'];
         }
 
