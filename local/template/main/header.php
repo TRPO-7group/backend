@@ -5,7 +5,10 @@
     <meta charset="utf-8">
     <title>Title</title>
     <link rel="stylesheet" href="/reposit-catalog/local/markup/build/default.css" type="text/css"/>
-    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script src="/reposit-catalog/local/markup/build/js/jquery.js"></script>
+
+    <script src="/reposit-catalog/local/markup/build/js/jquery-ui.js"></script>
+
     <script src="/reposit-catalog/local/markup/build/js/main.js"></script>
 </head>
 <div class="back">
