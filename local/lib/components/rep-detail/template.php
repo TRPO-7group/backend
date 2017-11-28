@@ -105,6 +105,7 @@
     setTimeout(function () {
         $(".back").removeClass("loader");
         $("#loader").hide();
+        $("body").removeClass("scroll-hidden");
     },100);
 
 </script>

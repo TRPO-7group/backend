@@ -8,6 +8,7 @@ function loadListener() {
         $(".detail-container > div").addClass("detail-commits-all");
         setTimeout(function () {
             $(".back").removeClass("loader");
+            $("body").removeClass("scroll-hidden");
             $("#loader").hide();
         },100);
     }
