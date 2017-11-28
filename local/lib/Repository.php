@@ -258,27 +258,29 @@ class Repository
 
     public function getCommitInfoLines($sha){
         $descriptors = $this->getDescriptors();
-        $process = proc_open("git show --numstat $sha", $descriptors, $pipes,$this->makeRepositPath());
-        $res = false;
-        if (is_resource($process))
-        {
-            $out = stream_get_contents($pipes[1]);
-            preg_match("/\n(\n(\d+)\t+(\d+)\t+(.*))+$/",$out, $matches);
-            $out = explode("\n",$matches[0]);
+        $obCache = new Cache();
+        $res = $obCache->load($sha,"info_lines");
+        if (!$res) {
+            $process = proc_open("git show --numstat $sha", $descriptors, $pipes, $this->makeRepositPath());
+            $res = false;
+            if (is_resource($process)) {
+                $out = stream_get_contents($pipes[1]);
+                preg_match("/\n(\n(\d+)\t+(\d+)\t+(.*))+$/", $out, $matches);
+                $out = explode("\n", $matches[0]);
 
-            foreach ($out as $file)
-            {
-                if (strlen($file))
-                {
-                    $fileInfo = explode("\t",$file,3);
-                    $res[] = array(
-                        "file_name" => $fileInfo[2],
-                        "add" => $fileInfo[0],
-                        "delete" => $fileInfo[1]
-                    );
+                foreach ($out as $file) {
+                    if (strlen($file)) {
+                        $fileInfo = explode("\t", $file, 3);
+                        $res[] = array(
+                            "file_name" => $fileInfo[2],
+                            "add" => $fileInfo[0],
+                            "delete" => $fileInfo[1]
+                        );
+                    }
+
                 }
-
             }
+            $obCache->save($sha,$res,2592000,"info_lines" );
         }
         return $res;
     }
@@ -287,22 +289,24 @@ class Repository
     {
         $this->checkReposit();
         $descriptors = $this->getDescriptors();
-        $process = proc_open("git show --name-status $sha", $descriptors, $pipes,$this->makeRepositPath());
-        $res = false;
-        if (is_resource($process))
-        {
+        $obCache = new Cache();
+        $res = $obCache->load($sha,"info_files");
+        if (!$res) {
+            $process = proc_open("git show --name-status $sha", $descriptors, $pipes, $this->makeRepositPath());
+            $res = false;
+            if (is_resource($process)) {
                 $out = stream_get_contents($pipes[1]);
-                 preg_match("/\n(\n([A-Z]+)\t+(.*))+$/",$out, $matches);
-                 $out = explode("\n",$matches[0]);
-                foreach ($out as $file)
-                {
-                    if (strlen($file))
-                    {
-                        $fileInfo = explode("\t",$file,2);
+                preg_match("/\n(\n([A-Z]+)\t+(.*))+$/", $out, $matches);
+                $out = explode("\n", $matches[0]);
+                foreach ($out as $file) {
+                    if (strlen($file)) {
+                        $fileInfo = explode("\t", $file, 2);
                         $res[$fileInfo[0]][] = $fileInfo[1];
                     }
                 }
-            proc_close($process);
+                proc_close($process);
+            }
+            $obCache->save($sha,$res,2592000, "info_files");
         }
     return $res;
     }

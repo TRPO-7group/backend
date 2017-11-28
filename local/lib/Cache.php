@@ -24,7 +24,7 @@ class Cache{
         if(file_exists($file)){
             $data = unserialize(file_get_contents($file));
 
-            if(time() <= $data['time'] + $data['ttl']){
+            if(time()  <= ($data['time'] + $data['ttl'])){
                 return $data['data'];
             }
             unlink($file);
