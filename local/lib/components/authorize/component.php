@@ -70,7 +70,7 @@ if (!$_SESSION["auth_info"]) {
         $url = $googleService->getAuthorizationUri();
         header('Location: ' . $url);
     } else {
-        $url = $currentUri->getRelativeUri() . '?go=go';
+        $url = $currentUri->getRelativeUri() . '?' . $_SERVER['QUERY_STRING'] . '&go=go';
         $arResult["auth_url"] = $url;
         // echo "<a href='$url'>Login with Google!</a>";
     }
