@@ -27,7 +27,7 @@ $storage = new Session();
 $credentials = new Credentials(
     $servicesCredentials['google']['key'],
     $servicesCredentials['google']['secret'],
-    $currentUri->getAbsoluteUri()
+   "http://reposit-catalog.tk/reposit-catalog/"
 );
 
 

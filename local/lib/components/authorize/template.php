@@ -13,7 +13,7 @@ if ($arResult["result"])
             Teacher
         </div>
         <div class="user-info-profile">
-            <a href=<?php echo $_SESSION["SCRIPT_NAME"] . "?logout=Y"?>>Выйти</a>
+            <a href=<?php echo  "/reposit-catalog/?logout=Y"?>>Выйти</a>
         </div>
     </div>
         <div class="header-user-logo">
