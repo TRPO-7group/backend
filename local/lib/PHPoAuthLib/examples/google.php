@@ -47,6 +47,7 @@ if (!empty($_GET['code'])) {
     $result = json_decode($googleService->request('userinfo'), true);
 
     // Show some of the resultant data
+    var_dump($result);
     echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
 
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {

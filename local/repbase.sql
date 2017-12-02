@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Ноя 06 2017 г., 19:24
+-- Время создания: Дек 02 2017 г., 23:46
 -- Версия сервера: 5.7.19-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.22-0ubuntu0.16.04.1
 
@@ -116,6 +116,27 @@ INSERT INTO `reptegs` (`id`, `repid`, `tegid`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `rep_user_status`
+--
+
+CREATE TABLE `rep_user_status` (
+  `id` int(11) NOT NULL,
+  `rep_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Дамп данных таблицы `rep_user_status`
+--
+
+INSERT INTO `rep_user_status` (`id`, `rep_id`, `user_id`, `status`) VALUES
+(1, 1, 1, 1),
+(2, 1, 1, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `teg`
 --
 
@@ -149,18 +170,21 @@ INSERT INTO `teg` (`teg_id`, `teg_name`) VALUES
 
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `user_mail` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
-  `user_type` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
-  `name` varchar(300) NOT NULL
+  `user_mail` varchar(100) DEFAULT NULL,
+  `user_type` varchar(20) DEFAULT NULL,
+  `name` varchar(300) NOT NULL,
+  `group_num` varchar(100) DEFAULT NULL,
+  `preview_img` varchar(300) DEFAULT NULL,
+  `google_id` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_mail`, `user_type`, `name`) VALUES
-(1, 'aa@mail.ru', NULL, 'Вася'),
-(2, 'bb@mail.ru', NULL, 'Петя');
+INSERT INTO `user` (`user_id`, `user_mail`, `user_type`, `name`, `group_num`, `preview_img`, `google_id`) VALUES
+(1, 'aa@mail.ru', '0', 'Vasya', '13541/2', '', ''),
+(2, 'bb@mail.ru', '0', 'Петя', '13541/1', '', '');
 
 --
 -- Индексы сохранённых таблиц
@@ -189,6 +213,12 @@ ALTER TABLE `reptegs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `repid` (`repid`),
   ADD KEY `tegid` (`tegid`);
+
+--
+-- Индексы таблицы `rep_user_status`
+--
+ALTER TABLE `rep_user_status`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `teg`
@@ -222,6 +252,11 @@ ALTER TABLE `rep`
 ALTER TABLE `reptegs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
+-- AUTO_INCREMENT для таблицы `rep_user_status`
+--
+ALTER TABLE `rep_user_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT для таблицы `teg`
 --
 ALTER TABLE `teg`
@@ -230,7 +265,7 @@ ALTER TABLE `teg`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

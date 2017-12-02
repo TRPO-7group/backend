@@ -19,22 +19,9 @@
         <div class="header-logo">
             <img src="/reposit-catalog/local/markup/build/img/Git-Icon-White.png">
         </div>
-        <div class="header-user">
-            <div class="header-user-info">
-                <div class="user-info-name">
-                    Ivanov Ivan
-                </div>
-                <div class="user-info-position">
-                    Teacher
-                </div>
-                <div class="user-info-profile">
-                    <a href="#">Профиль пользователя</a>
-                </div>
-            </div>
-            <div class="header-user-logo">
-                <img src="/reposit-catalog//local/markup/build/img/blank-person-390x390.png">
-            </div>
-        </div>
+        <?php
+        MainClass::includeComponent("authorize","", array());
+       ?>
         <div class="header-bottom-section">
             <div class="header-menu">
                 <a href="/reposit-catalog/">Личные репозитории</a>

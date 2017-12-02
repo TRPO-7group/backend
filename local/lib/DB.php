@@ -54,11 +54,11 @@ class DB{
         for ($i = 0; $i<count($fields); $i++)
             $quest[] = "?";
         $sql = "INSERT INTO $table (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $quest). ")";
+        $pdo->exec("SET NAMES utf8");
         $stmt = $pdo->prepare($sql);
         $stmt->execute($values);
         return $stmt->rowCount();
     }
-
 
 
     static public function deleteRow($table, $whereMask, $values)
@@ -68,6 +68,4 @@ class DB{
         $stmt = $pdo->prepare($sql);
         $stmt->execute($values);
     }
-
-
 }
