@@ -81,6 +81,5 @@ class DB{
         $sql = "UPDATE " . $table . " SET " . $setMask . " WHERE " . $whereMask;
         $stmt = $pdo->prepare($sql);
         $stmt->execute($values);
-        var_dump($stmt->errorInfo());
     }
 }
