@@ -1,5 +1,5 @@
 <div class="detail-container">
-    <h3 class="detail-statistic"><?php echo $params["owner_name"]?><span>[+]</span></h3>
+    <h3 data-user-id="#<?php echo $params["owner_id"]?>" class="detail-statistic"><?php echo $params["owner_name"]?><span>[+]</span></h3>
     <div>
         <div>
             <div>

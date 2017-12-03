@@ -8,7 +8,7 @@ class DB{
         );
     }
 
-    static public function getList($table, $select ="*", $join=false, $where=false, $page=false, $countOnPage=false, &$existNextPage)
+    static public function getList($table, $select ="*", $join=false, $where=false, $page=false, $countOnPage=false, &$existNextPage, $order_by=false)
     {
         $query = "SELECT $select FROM $table";
         if ($join)
@@ -20,6 +20,10 @@ class DB{
         if ($where)
             $query .= " WHERE $where";
 
+        if ($order_by)
+        {
+            $query .= " ORDER BY " . $order_by;
+        }
         if ($page>0 && $countOnPage>0)
         {
             $offset = DB::getOffset($page,$countOnPage);
@@ -67,5 +71,16 @@ class DB{
         $sql = "DELETE FROM " . $table . " WHERE " . $whereMask;
         $stmt = $pdo->prepare($sql);
         $stmt->execute($values);
+    }
+
+
+    static public function updateRow($table, $setMask, $whereMask, $values)
+    {
+        $pdo = new PDO('mysql:host=' . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+        $pdo->exec("SET NAMES utf8");
+        $sql = "UPDATE " . $table . " SET " . $setMask . " WHERE " . $whereMask;
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($values);
+        var_dump($stmt->errorInfo());
     }
 }

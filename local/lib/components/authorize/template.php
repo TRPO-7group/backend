@@ -5,7 +5,7 @@ if ($arResult["result"])
     <div class="header-user">
         <div class="header-user-info">
         <div class="user-info-name">
-            <a href="#">
+            <a href="<?php echo "/reposit-catalog/user.php?id=" . $arResult["result"]["user_id"]?>">
             <?php echo $arResult["result"]["name"]?>
             </a>
         </div>

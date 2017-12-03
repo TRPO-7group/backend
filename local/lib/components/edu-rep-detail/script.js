@@ -1,6 +1,4 @@
-/**
- * Created by Алексей on 07.11.2017.
- */
+
 function loadListener() {
     loadingCount++;
     if (loadingCount >= $(".detail-container").length * 3) //количество диаграмм на странице
@@ -10,8 +8,18 @@ function loadListener() {
             $(".back").removeClass("loader");
             $("body").removeClass("scroll-hidden");
             $("#loader").hide();
+            var hash = window.location.hash;
+            if(hash) {
+                var $container = $("[data-user-id=" + hash + "]");
+                $container.click();
+                $('html, body').animate({
+                        scrollTop: $container.offset().top
+                    }, 1000
+                )
+            }
         },100);
     }
 }
+
 
 

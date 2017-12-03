@@ -14,7 +14,7 @@
 use OAuth\OAuth2\Service\Google;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-
+session_start();
 /**
  * Bootstrap the example
  */

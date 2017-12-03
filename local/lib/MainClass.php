@@ -12,6 +12,7 @@ class MainClass
     static $REP_USER_STATUS_NOT_INVITED = 0;
     static $REP_USER_STATUS_INVITED = 1;
     static $REP_USER_STATUS_ACCEPTED = 2;
+    static $REP_USER_STATUS_TEACHER_INVITE = 3;
 
     static public function getDescriptors(){
         return array(
@@ -107,5 +108,9 @@ class MainClass
         $mysqli->close();
     }
 
+    public static function getUserLink($user_id)
+    {
+        return "/reposit-catalog/user.php?id=" . intval($user_id);
+    }
 
 }

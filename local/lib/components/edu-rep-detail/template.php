@@ -12,7 +12,7 @@
 
 foreach ($arResult["child_reps"] as $rep)
 {
-    MainClass::includeComponent("rep-detail","edu-template",array('id' => $rep['rep_id'], 'owner_name' => $rep['user_name']));
+    MainClass::includeComponent("rep-detail","edu-template",array('id' => $rep['rep_id'], 'owner_name' => $rep['user_name'], "owner_id" => $rep["user_id"]));
 }
 
 if (count($arResult["child_reps"]) == 0)

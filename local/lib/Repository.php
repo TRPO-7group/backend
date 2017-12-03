@@ -358,13 +358,16 @@ class Repository
     public function getChildReps()
     {
         $listReps = DB::getList("rep","*",array('user' => array("rep.rep_owner", "user.user_id")),"rep.pater_rep=" . $this->getId());
+        $commits = $this->getUserCommits();
         $res = array();
         foreach ($listReps as $member)
         {
             $res[] = array(
+                "id" => $member["id"],
                 "rep_id" => $member["rep_id"],
                 "user_name" => $member["name"],
-                "user_id" => $member["user_id"]
+                "user_id" => $member["user_id"],
+                "last_commit" => $commits[0]["date"]
             );
         }
         return $res;

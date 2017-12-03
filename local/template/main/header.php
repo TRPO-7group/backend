@@ -5,13 +5,22 @@
     <meta charset="utf-8">
     <title>Title</title>
     <link rel="stylesheet" href="/reposit-catalog/local/markup/build/default.css" type="text/css"/>
-    <script src="/reposit-catalog/local/markup/build/js/jquery.js"></script>
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <script src="/reposit-catalog/local/markup/build/js/jquery.js"></script>
     <script src="/reposit-catalog/local/markup/build/js/jquery-ui.js"></script>
-
     <script src="/reposit-catalog/local/markup/build/js/main.js"></script>
 </head>
 <div class="back">
+</div>
+<div class="popup-user-find js-popup">
+    <div class="popup-user-find-content">
+        <div class="user-find-input-container">
+            <input id="user-find-autocomplete">
+        </div>
+        <div class="popup-user-find-ok-container">
+            <button class="popup-user-find-ok">ОК</button>
+        </div>
+    </div>
 </div>
 <header>
     <div class="header-section">
