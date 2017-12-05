@@ -357,7 +357,7 @@ class Repository
 
     public function getChildReps()
     {
-        $listReps = DB::getList("rep","*",array('user' => array("rep.rep_owner", "user.user_id")),"rep.pater_rep=" . $this->getId());
+        $listReps = DB::getList("rep_user_status","*",array('rep' => array("rep_user_status.user_rep", "rep.rep_id"), "user" => array("rep_user_status.user_id", "user.user_id")),"rep_user_status.rep_id=" . $this->getId());
         $commits = $this->getUserCommits();
         $res = array();
         foreach ($listReps as $member)
@@ -367,7 +367,8 @@ class Repository
                 "rep_id" => $member["rep_id"],
                 "user_name" => $member["name"],
                 "user_id" => $member["user_id"],
-                "last_commit" => $commits[0]["date"]
+                "last_commit" => $commits[0]["date"],
+                "status" => $member["status"]
             );
         }
         return $res;

@@ -68,7 +68,7 @@ if ($_SESSION["auth_info"] && $_SESSION["auth_info"]["user_id"] == $params["id"]
         $arResult["status"][$status["rep_id"]] = $status["status"];
     }
 
-    $arResult["rep_ind_list"] = DB::getList("rep", "rep_id", false, "rep_owner=" . $user["user_id"] . " AND " . MainClass::$INDIVIDUAL);
+    $arResult["rep_ind_list"] = DB::getList("rep", "rep_id", false, "rep_owner=" . $user["user_id"] . " AND is_ind=" . MainClass::$INDIVIDUAL);
     foreach ($arResult["rep_ind_list"] as &$item)
     {
         $repository->loadById($item["rep_id"]);
