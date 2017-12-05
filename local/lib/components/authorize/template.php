@@ -10,7 +10,10 @@ if ($arResult["result"])
             </a>
         </div>
         <div class="user-info-position">
-            Teacher
+            <?php if ($arResult["result"]["user_type"] == MainClass::$USER_TYPE_TEACHER)
+                echo "Учитель"; else
+                    echo "Студент";
+                ?>
         </div>
         <div class="user-info-profile">
             <a href=<?php echo  "/reposit-catalog/?logout=Y"?>>Выйти</a>
