@@ -398,7 +398,8 @@ class Repository
             "owner" => $this->getOwner(),
             "url" => $this->getUrl(),
             "discipline" => array("id" => $this->getDiscpline(), "name" => $discipline_name),
-            "last_commit" => $commits[0]["date"]
+            "last_commit" => $commits[0]["date"],
+            "link" => $this->getLink()
         );
     }
 }

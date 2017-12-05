@@ -71,6 +71,7 @@ class DB{
         $sql = "DELETE FROM " . $table . " WHERE " . $whereMask;
         $stmt = $pdo->prepare($sql);
         $stmt->execute($values);
+        var_dump($stmt->errorInfo());
     }
 
 
