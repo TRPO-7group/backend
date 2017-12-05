@@ -76,6 +76,7 @@ $arResult["desciplines"] = DB::getList("disc", "*", false, false, false, false, 
 else
 
 {
+    echo "Страница в разработке";
     header("HTTP/1.1 404 Not Found");
     die;
 }

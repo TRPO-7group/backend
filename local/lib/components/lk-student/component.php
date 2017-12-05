@@ -78,6 +78,7 @@ if ($_SESSION["auth_info"] && $_SESSION["auth_info"]["user_id"] == $params["id"]
 else
 
 {
+    echo "Страница в разработке";
     header("HTTP/1.1 404 Not Found");
     die;
 }
