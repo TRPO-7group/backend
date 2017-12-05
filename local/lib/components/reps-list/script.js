@@ -75,7 +75,7 @@ $(window).on("load", function () {
             }
         },
         close: function() {
-            $(form).reset();
+            $(form).trigger("reset");
             allFields.removeClass( "ui-state-error" );
         }
     });
