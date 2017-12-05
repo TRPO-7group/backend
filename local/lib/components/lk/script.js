@@ -147,3 +147,74 @@ $(document).on("click", ".repos-list-elem-title-delete", function () {
         });
     }
 })
+
+
+
+
+
+//Попап создания
+$(window).on("load", function () {
+
+    var form = $("#add-edu-rep-form").find("form");
+    var allFields =  $("#add-edu-rep-form").find("input");
+    var urlField = form.find("#rep_url");
+
+
+    function addIndRep() {
+        form.submit();
+    }
+
+
+    $(document).on("submit", "#add-edu-rep-form form", function () {
+
+        if (checkRegexp($(urlField), /^[\s\S]*\.git$/i)){
+            var data = form.serialize();
+            $.ajax({
+                url: "/reposit-catalog/ajax/add-edu-rep.php",
+                type: "post",
+                data: data,
+                success: function () {
+                    window.location.reload();
+                }
+
+            });
+        }
+        return false;
+    })
+
+
+    function checkRegexp( o, regexp ) {
+        if ( !( regexp.test( o.val() ) ) ) {
+            o.addClass( "ui-state-error" );
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
+    dialog = $( "#add-edu-rep-form" ).dialog({
+        autoOpen: false,
+        height: 400,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Добавить репозиторий": addIndRep,
+            Cancel: function() {
+                dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            $(form).trigger("reset");
+            allFields.removeClass( "ui-state-error" );
+        }
+    });
+
+
+    $(document).on("click", ".js-open-add-edu-rep", function () {
+        dialog.dialog("open");
+    });
+
+    $( "#disc" ).selectmenu();
+});

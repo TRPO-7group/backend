@@ -37,7 +37,7 @@ class MainClass
         {
             $where = "rep.is_ind=$type";
         }
-        $list = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage);
+        $list = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage, "sort");
         $res = array();
         foreach ($list as $row) {
             $rep = new Repository();
@@ -65,8 +65,9 @@ class MainClass
                 "link" => $rep->getLink()
             );
 
-            if ($group)
+            if ($group) {
                 $res[$row['name']][] = $newRep;
+            }
             else
                 $res[] = $newRep;
         }

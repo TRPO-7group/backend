@@ -39,7 +39,7 @@ $(window).on("load", function () {
         if (checkRegexp($(urlField), /^[\s\S]*\.git$/i)){
          var data = form.serialize();
             $.ajax({
-                url: "/reposit-catalog/ajax/add-ind-rep.php",
+                url: "/reposit-catalog/ajax/add-edu-rep.php",
                 type: "post",
                 data: data,
                 success: function () {

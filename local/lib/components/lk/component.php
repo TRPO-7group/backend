@@ -70,6 +70,8 @@ if ($idChildReps && $usersChildReps) {
         }
     }
 }
+
+$arResult["desciplines"] = DB::getList("disc", "*", false, false, false, false, $next, "sort");
 }
 else
 

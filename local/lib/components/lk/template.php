@@ -56,7 +56,7 @@
 
     <div class="reps-list">
         <span class="rep-list-title">Список учебных репозиториев</span>
-        <button class="rep-list-add">Добавить репозиторий</button>
+        <button class="rep-list-add js-open-add-edu-rep">Добавить репозиторий</button>
 
         <?php
 
@@ -116,4 +116,29 @@
         <?php }?>
 
     </div>
+</div>
+
+
+
+
+<div id="add-edu-rep-form" class="dialog-form">
+    <form action="/reposit-catalog/ajax/add-ind-rep.php">
+        <fieldset>
+            <label for="rep_url">URL</label>
+            <input type="text" name="rep_url" id="rep_url" value="" class="text ui-widget-content ui-corner-all" placeholder="Введите url...">
+
+            <label for="disc">Выберите дисциплину</label>
+            <select name="disc" id="disc">
+                <?php foreach ($arResult["desciplines"] as $disc){?>
+                    <option value="<?php echo $disc["id"]?>"><?php echo $disc["name"]?></option>
+                <?php }?>
+            </select>
+
+            <label for="rep_descr">Описание</label>
+            <textarea name="rep_descr" id="rep_descr" class="text ui-widget-content ui-corner-all" placeholder="Введите описание"></textarea>
+
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" t abindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
 </div>
