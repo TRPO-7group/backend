@@ -44,7 +44,11 @@ if ($_SESSION["auth_info"] && $_SESSION["auth_info"]["user_id"] == $params["id"]
     {
         $rep->loadById($repElem["rep_id"]);
         $arResult["rep_list"][$repElem["rep_id"]]["info"] = $rep->getRepInfo();
-        $arResult["rep_list"][$repElem["rep_id"]]["child_reps"] = $rep->getChildReps();
+        $list = $rep->getChildReps();
+        foreach ($list as $item) {
+            if ($item["status"] == MainClass::$REP_USER_STATUS_ACCEPTED || $item["status"] == MainClass::$REP_USER_STATUS_INVITED)
+                $arResult["rep_list"][$repElem["rep_id"]]["child_reps"][] = $item;
+        }
         $idChildReps[] = $repElem["rep_id"];
         foreach ( $arResult["rep_list"][$repElem["rep_id"]]["child_reps"] as $child) {
             $usersChildReps[] = $child["user_id"];
