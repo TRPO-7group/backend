@@ -14,7 +14,7 @@ class DB{
         if ($join)
         {
             foreach ($join as $key => $item) {
-                $query .= " INNER JOIN $key ON ($item[0]=$item[1])";
+                $query .= " LEFT JOIN $key ON ($item[0]=$item[1])";
             }
         }
         if ($where)

@@ -7,7 +7,7 @@ foreach ($list as $item)
 {
     $result[] = array(
         "id" => $item["user_id"],
-        "value" => $item["name"] . " (" . $item["group_num"] . ")"
+        "value" => $item["name"] . ($item["group_num"] ? " (" . $item["group_num"] . ")" : "")
     );
 }
 

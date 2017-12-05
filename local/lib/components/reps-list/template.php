@@ -5,9 +5,14 @@
 </script>
 <div class="list">
     <div class="all">
+        <div>
         <?php if ($arResult["cnt"]) {?>
         Всего <?php echo $arResult["cnt"]?> <?php echo MainClass::getWord($arResult["cnt"], array("репозиторий", "репозитория", "репозиториев"));?>
-        <?php } else echo "У вас еще нет личных репозиториев"?>
+        <?php } else echo "У вас еще нет личных репозиториев"?></span>
+        </div>
+        <div class="standart-button js-open-add-ind-rep">
+            Добавить
+        </div>
     </div>
     <hr>
     <?php
@@ -35,3 +40,20 @@ if ($arResult["exist_next_page"]){
     <button data-url="<?php echo $arResult['next_page']?>"><img src="/reposit-catalog/local/markup/build/img/update.png">Загрузить еще</button>
 </div>
 <?php }?>
+
+
+
+
+<div id="add-ind-rep-form" class="dialog-form">
+    <form action="/reposit-catalog/ajax/add-ind-rep.php">
+        <fieldset>
+            <label for="rep_url">URL:</label>
+            <input type="text" name="rep_url" id="rep_url" value="" class="text ui-widget-content ui-corner-all" placeholder="Введите url...">
+            <label for="rep_descr">Описание</label>
+            <textarea name="rep_descr" id="rep_descr" class="text ui-widget-content ui-corner-all" placeholder="Введите описание"></textarea>
+
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
