@@ -30,14 +30,13 @@ class MainClass
     }
 
 
-    static  public function getRepositoryList($type = 2, $group = true, $page = false, $countOnPage=false, &$existNextPage = false)
+    static  public function getRepositoryList($type = 2, $group = true, $page = false, $countOnPage=false, &$existNextPage = false, $user_id = false)
     {
         $where = "";
         if ($type != MainClass::$BOTH)
         {
             $where = "rep.is_ind=$type";
         }
-
         $list = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage);
         $res = array();
         foreach ($list as $row) {
@@ -111,6 +110,11 @@ class MainClass
     public static function getUserLink($user_id)
     {
         return "/reposit-catalog/user.php?id=" . intval($user_id);
+    }
+
+    public static function getUser(){
+        session_start();
+        return $_SESSION["auth_info"];
     }
 
 }

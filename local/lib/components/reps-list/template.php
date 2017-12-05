@@ -5,7 +5,9 @@
 </script>
 <div class="list">
     <div class="all">
-        Всего <?php echo $arResult["cnt"]?> <?php echo MainClass::getWord(count($arResult['items']), array("репозиторий", "репозитория", "репозиториев"));?>
+        <?php if ($arResult["cnt"]) {?>
+        Всего <?php echo $arResult["cnt"]?> <?php echo MainClass::getWord($arResult["cnt"], array("репозиторий", "репозитория", "репозиториев"));?>
+        <?php } else echo "У вас еще нет личных репозиториев"?>
     </div>
     <hr>
     <?php

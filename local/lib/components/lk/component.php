@@ -35,7 +35,7 @@ if ($_SESSION["auth_info"] && $_SESSION["auth_info"]["user_id"] == $params["id"]
 
 
     //достаем список учебных репов, принадлежащих юзверю, и репов привязанных к ним
-    $repList = DB::getList("rep", "rep_id", false, "rep_owner=" . $_SESSION["auth_info"]["user_id"]);
+    $repList = DB::getList("rep", "rep_id", false, "is_ind = ". MainClass::$EDU ." AND rep_owner=" . $_SESSION["auth_info"]["user_id"]);
     $rep = new Repository();
 
     $idChildReps = array();
