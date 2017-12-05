@@ -5,6 +5,9 @@
 </script>
 <div class="list">
     <div class="all">
+        <?php
+        $user = MainClass::getUser();
+        if ($user["user_id"]){?>
         <div>
         <?php if ($arResult["cnt"]) {?>
         Всего <?php echo $arResult["cnt"]?> <?php echo MainClass::getWord($arResult["cnt"], array("репозиторий", "репозитория", "репозиториев"));?>
@@ -13,6 +16,7 @@
         <div class="standart-button js-open-add-ind-rep">
             Добавить
         </div>
+        <?php } else echo "Авторизуйтесь для просмотра личных репозиториев"?>
     </div>
     <hr>
     <?php
