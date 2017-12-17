@@ -18,7 +18,7 @@ foreach ($list as $item)
 
 $user = MainClass::getUser();
 $arResult["show_button"] = false;
-if ($user["user_type"] == MainClass::$USER_TYPE_STUDENT)
+if ($user["user_id"] && $user["user_type"] == MainClass::$USER_TYPE_STUDENT)
 {
     $list = DB::getList("rep_user_status", "id", false,
         "user_id=" . $user["user_id"] . " AND rep_id=" . $params["id"]);
