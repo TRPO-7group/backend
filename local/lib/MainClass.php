@@ -62,7 +62,8 @@ class MainClass
                 "discipline" => $row['name'],
                 "last_commit" => $commits[0]["date"],
                 "tegs" => $tegs,
-                "link" => $rep->getLink()
+                "link" => $rep->getLink(),
+                "language" => $rep->getLanguage() ? $rep->getLanguage() : "Язык не определен"
             );
 
             if ($group) {

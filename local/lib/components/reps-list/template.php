@@ -30,7 +30,8 @@
                 <?php echo $reposit['name']?>
             </a>
         </div>
-        <span class="list-elem-lang">Язык: php</span><span class="list-elem-refresh">Последнее обновление: <?php echo $date->format("Y.m.d")?></span>
+            <?php if ($reposit["language"]) {?>
+        <span class="list-elem-lang">Язык: <?php echo $reposit["language"]?></span><?php }?><span class="list-elem-refresh">Последнее обновление: <?php echo $date->format("Y.m.d")?></span>
             <div class="list-elem-tags"><?php echo $reposit["tegs"];?></div>
         <hr>
     </div>

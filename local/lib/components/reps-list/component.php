@@ -32,7 +32,8 @@ if ($user["user_id"]) {
             "discipline" => $row['name'],
             "last_commit" => $commits[0]["date"],
             "tegs" => $tegs,
-            "link" => $rep->getLink()
+            "link" => $rep->getLink(),
+            "language" => $rep->getLanguage()
         );
             $res[] = $newRep;
     }

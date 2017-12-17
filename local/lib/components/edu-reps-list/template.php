@@ -17,7 +17,8 @@
                 <?php echo $item["name"]?>
 </a>
         </div>
-        <span class="list-elem-lang">Язык: php</span><span class="list-elem-refresh">Последнее обновление:  <?php echo $date->format("Y.m.d")?></span>
+                <?php if ($item["language"]) {?>
+        <span class="list-elem-lang">Язык: <?php echo $item["language"]?></span><?php }?><span class="list-elem-refresh">Последнее обновление:  <?php echo $date->format("Y.m.d")?></span>
         <div class="list-elem-tags"><?php echo $item["tegs"]?></div>
         <hr>
     </div>

@@ -85,6 +85,22 @@ class Repository
         $this->discpline = $discpline;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
     private $id;
     private $url;
     private $description;
@@ -92,6 +108,7 @@ class Repository
     private $parent_rep;
     private $owner;
     private $discpline;
+    private $language;
 
     /**
      * @return mixed
@@ -185,6 +202,7 @@ class Repository
         $this->setIndividual($res['is_ind']);
         $this->setOwner($res['rep_owner']);
         $this->setParentRep($res['pater_rep']);
+        $this->setLanguage(FileTypes::getTypeRep($this->makeStoragePath()));
     return true;
     }
 
@@ -402,5 +420,41 @@ class Repository
             "last_commit" => $commits[0]["date"],
             "link" => $this->getLink()
         );
+    }
+}
+
+class FileTypes{
+    private static $types = array(
+        "JavaScript" => array("*.js"),
+        "C++" => array("*.cpp", "*.hpp"),
+        "C" => array("*.c", "*.h"),
+        "PHP" => array("*.php"),
+        "HTML/CSS" => array("*.html","*.css"),
+        "Java" => array("*.java")
+    );
+
+
+
+    public static function getTypeRep($path)
+    {
+        $typesLoc = self::$types;
+        foreach ($typesLoc as $key => $typeArr)
+        {
+            foreach ($typeArr as $keyType =>  $type)
+            {
+                $typesLoc[$key][$keyType] = "\"" . $type . "\"";
+            }
+        }
+        foreach ($typesLoc as $key => $typesArr) {
+            $res[$key] = shell_exec("find  \"$path\" -type f -name " . implode(" -o -name ", $typesArr) . " |  wc -l");
+        }
+        $keys = array_keys($typesLoc);
+        $max = $keys[0];
+        foreach ($res as $key => $typeCount)
+        {
+            if ($res[$max] < $typeCount)
+                $max = $key;
+        }
+        return $max;
     }
 }
