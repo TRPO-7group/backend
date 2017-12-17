@@ -92,8 +92,8 @@ $servicesCredentials = array(
         'secret'    => '',
     ),
     'github' => array(
-        'key'       => '',
-        'secret'    => '',
+        'key'       => 'a51bc39adc6b45424e02',
+        'secret'    => '63ea60833b67d21f047125470e75da82523ee864',
     ),
     'google' => array(
         'key'       => '287027464721-ajv5p8cd2reu6k0v2a63aibbt4calsgh.apps.googleusercontent.com',

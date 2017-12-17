@@ -18,3 +18,4 @@ require_once "DB.php";
 require_once "MainClass.php";
 require_once "Repository.php";
 require_once "Cache.php";
+require_once "php-github-api/vendor/autoload.php";

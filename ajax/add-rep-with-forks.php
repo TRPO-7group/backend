@@ -7,6 +7,5 @@ if ($user["user_id"]) {
     $url = $_POST["rep_url"];
     $descr = $_POST["rep_descr"];
     $disc = $_POST["disc"];
-    MainClass::addRep($url, $descr, $user["user_id"], $disc,MainClass::$EDU);
-
+    MainClass::addRepWithForks($url, $descr, $disc, $user["user_id"]);
 }

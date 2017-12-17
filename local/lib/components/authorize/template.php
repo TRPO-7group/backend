@@ -32,9 +32,15 @@ if ($arResult["result"])
 ?>
 
 <div class="header-user authorize-link">
-
-    <a href="<?php echo $arResult["auth_url"]?>">
-        Авторизация с помощью Google
-    </a>
+    <div>
+        <a href="<?php echo $arResult["auth_url"] . "&auth_from=google"?>">
+            Авторизация с помощью Google
+        </a>
+    </div>
+    <div>
+        <a href="<?php echo $arResult["auth_url"] . "&auth_from=github"?>">
+            Авторизация с помощью GitHub
+        </a>
+    </div>
 </div>
 <?php }?>

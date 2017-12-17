@@ -169,8 +169,16 @@ $(window).on("load", function () {
 
         if (checkRegexp($(urlField), /^[\s\S]*\.git$/i)){
             var data = form.serialize();
+            var url = "/reposit-catalog/ajax/add-edu-rep.php";
+            if (/^https:\/\/github\.com\/(.*)\/(.*).git$/.test($(urlField).val()))
+            {
+                if (confirm("Добавить форки?"))
+                {
+                    url = "/reposit-catalog/ajax/add-rep-with-forks.php";
+                }
+            }
             $.ajax({
-                url: "/reposit-catalog/ajax/add-edu-rep.php",
+                url: url,
                 type: "post",
                 data: data,
                 success: function () {

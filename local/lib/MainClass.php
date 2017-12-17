@@ -118,4 +118,96 @@ class MainClass
         return $_SESSION["auth_info"];
     }
 
+
+    public static function isRepExists($url)
+    {
+        $list = DB::getList("rep", "rep_id", false, "rep_url='" . $url . "'");
+        return $list[0]["rep_id"];
+    }
+
+    public static function addRep($url, $descr, $user, $disc, $repType)
+    {
+        if (!$id = self::isRepExists($url))
+            DB::insertRow("rep", array("rep_url", "rep_description", "rep_owner", "is_ind", "rep_disc"), array($url, $descr, $user, $repType, $disc));
+        else
+            return $id;
+        $id = self::isRepExists($url);
+        return $id;
+    }
+
+
+    public static function isUserExists($google_id)
+    {
+        $users = DB::getList("user","user_id", false,"google_id=" . $google_id);
+        if (count($users))
+        {
+            return $users[0]["user_id"];
+        }
+        return false;
+    }
+
+    public static function addNewUser($name, $email, $google_id, $img = null)
+    {
+        $users = DB::getList("user","*", false,"google_id=" . $google_id);
+        if (!count($users))
+        {
+            DB::insertRow("user",
+                array('user_mail', 'user_type','name','preview_img','google_id'),
+                array($email, '0', $name, $img, $google_id));
+        }
+        $users = DB::getList("user","user_id", false,"google_id=" . $google_id);
+        return $users[0]["user_id"];
+    }
+
+    public static function isExistsStatus($rep_id, $user_id, $user_rep)
+    {
+        $list = DB::getList("rep_user_status", "id", false, "rep_id=$rep_id AND user_id=$user_id AND user_rep=$user_rep");
+        if (count($list))
+        {
+            return $list[0]["id"];
+        }
+        return false;
+    }
+
+    public static function newStatus($rep_id, $user_id, $user_rep, $status)
+    {
+        if ($id = self::isExistsStatus($rep_id, $user_id, $user_rep))
+        {
+            DB::updateRow("rep_user_status","status=?", "id=?", array($status, $id));
+            return $id;
+        }
+        else
+        {
+            DB::insertRow("rep_user_status",
+                array("rep_id", "user_id", "user_rep", "status"),
+                array($rep_id, $user_id, $user_rep, $status));
+            $id = self::isExistsStatus($rep_id, $user_id, $user_rep);
+            return $id;
+        }
+
+    }
+
+    public static function addRepWithForks($url, $descr, $disc, $userId)
+    {
+
+        if ($eduRep = self::addRep($url, $descr, $userId, $disc, MainClass::$EDU)){
+        preg_match("/.*\/(.*)\/(.*).git/",$url,$matches);
+        $userName = $matches[1];
+        $reposName = $matches[2];
+
+        $client = new \Github\Client();
+        $list = $client->api("repos")->forks()->all($userName , $reposName);
+        foreach ($list as $fork)
+        {
+            $userId = self::isUserExists($fork["owner"]["id"]);
+            if(!$userId)
+                $userId = self::addNewUser($fork["owner"]["login"], $fork["owner"]["email"], $fork["owner"]["id"]);
+           $idRep = self::addRep($fork["html_url"], null, $userId, null, MainClass::$INDIVIDUAL);
+            if (!self::isExistsStatus($eduRep, $userId, $idRep))
+            {
+                self::newStatus($eduRep, $userId, $idRep,MainClass::$REP_USER_STATUS_ACCEPTED);
+            }
+        }
+        }
+    }
 }
