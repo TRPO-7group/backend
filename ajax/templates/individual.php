@@ -1,7 +1,4 @@
-<div class="detail-container">
-    <div class="detail-description">
-        <?php echo $arResult['repository_description'];?>
-    </div>
+
     <h3 class="detail-statistic">Статистика за последний месяц <span>[+]</span></h3>
     <div class="detail-commits-all">
         <div>
@@ -97,4 +94,4 @@
     <div id="curve_chart_commit<?php echo $arResult["repository_id"] . "_" . $period?>" style="width: 370px; height: 200px; display: inline-block"></div>
     <div id="curve_chart_files<?php echo $arResult["repository_id"] . "_" . $period?>" style="width: 370px; height: 200px; display: inline-block"></div>
     <div id="curve_chart_lines<?php echo $arResult["repository_id"] . "_" . $period?>" style="width: 370px; height: 200px; display: inline-block"></div>
-</div>
+
