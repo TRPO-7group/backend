@@ -100,5 +100,3 @@
         <div id="curve_chart_files<?php echo $arResult["repository_id"] . "_" . $period?>" style="width: 370px; height: 200px; display: inline-block"></div>
         <div id="curve_chart_lines<?php echo $arResult["repository_id"] . "_" . $period?>" style="width: 370px; height: 200px; display: inline-block;"></div>
     </div>
-
-<hr>
