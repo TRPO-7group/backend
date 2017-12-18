@@ -10,9 +10,8 @@
     <script src="/reposit-catalog/local/markup/build/js/jquery-ui.js"></script>
     <script src="/reposit-catalog/local/markup/build/js/main.js"></script>
 </head>
-<div class="back loader">
+<div class="back">
 </div>
-<div id="loader"></div>
 <header>
     <div class="header-section">
 

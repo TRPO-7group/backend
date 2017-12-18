@@ -18,42 +18,60 @@
                 <label class="user-info-label">
                     ФИО:
                 </label>
+                <?php if ($arResult["user_info"]){?>
+                    <span><?php echo $arResult["user_info"]["name"]?></span>
+                <?php } else {?>
                 <input type="text" name="name" value="<?php echo $_SESSION["auth_info"]["name"]?>" required>
+                <?php }?>
             </div>
             <div class="user-info-section">
                 <label class="user-info-label">
                     Группа:
                 </label>
+                <?php if ($arResult["user_info"]){?>
+                    <span><?php echo $arResult["user_info"]["group_num"]?></span>
+                <?php } else {?>
                 <input type="text" name="group" value="<?php echo $_SESSION["auth_info"]["group_num"]?>">
-            </div>
+                <?php }?>
+             </div>
             <div class="user-info-section">
                 <label class="user-info-label">
                     Почта:
                 </label>
+                <?php if ($arResult["user_info"]){?>
+                    <span><?php echo $arResult["user_info"]["user_mail"]?></span>
+                <?php } else {?>
                 <input type="email" name="email" value="<?php echo $_SESSION["auth_info"]["user_mail"]?>">
-
+                <?php }?>
             </div>
             <div class="user-info-section">
                 <label class="user-info-label">
                     Статус:
                 </label>
+                <?php if (!$arResult["user_info"]){?>
                 <?php echo $_SESSION["auth_info"]["user_type"] == 0 ? "Студент" : "Учитель"?>
+                <?php } else {?>
+                    <?php echo $arResult["user_info"]["user_type"] == 0 ? "Студент" : "Учитель"?>
+                <?php }?>
             </div>
-
+            <?php if (!$arResult["user_info"]){?>
             <div class="lk-submit-button">
                 <button type="submit">Сохранить</button>
             </div>
+            <?php }?>
 
         </div>
         <div class="user-avatar">
             <img src="<?php echo $_SESSION["auth_info"]["preview_img"]?>" id="user-avatar-loader">
+            <?php if (!$arResult["user_info"]){?>
             <label class="user-avatar-uploader">
                 Загрузить новое фото
                 <input type="file" name="foto">
             </label>
+            <?php }?>
         </div>
     </form>
-
+    <?php if (!$arResult["user_info"]){?>
     <div class="reps-list">
         <span class="rep-list-title">Список учебных репозиториев <?php if ($arResult["teacher_inv_cnt"]) echo "(" . $arResult["teacher_inv_cnt"] . " " . MainClass::getWord($arResult["teacher_inv_cnt"], array("новое", "новых", "новых")) . " " .MainClass::getWord($arResult["teacher_inv_cnt"], array("приглашение", "приглашения", "приглашений")) . ")"?></span>
 
@@ -82,9 +100,10 @@ $user = MainClass::getUser();
         <?php }?>
 
     </div>
+    <?php }?>
 </div>
 
-
+<?php if (!$arResult["user_info"]){?>
 <div id="add-ind-rep-form" class="dialog-form">
     <form>
         <p>Добавьте репозиторий</p>
@@ -111,5 +130,6 @@ $user = MainClass::getUser();
         <input type="hidden" name="edu_rep">
     </form>
 </div>
+<?php }?>
 
 

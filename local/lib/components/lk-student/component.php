@@ -1,5 +1,7 @@
 <?php
 session_start();
+$id = intval($_GET["id"]);
+
 if ($_SESSION["auth_info"] && $_SESSION["auth_info"]["user_id"] == $params["id"])
 {
     if ($_POST["save"] == "Y")
@@ -75,8 +77,11 @@ if ($_SESSION["auth_info"] && $_SESSION["auth_info"]["user_id"] == $params["id"]
         $item = $repository->getRepInfo();
     }
 }
-else
-
+else if ($_GET["id"])
+{
+    $user =DB::getList("user", "*", false, "user_id = " . $id);
+    $arResult["user_info"] = $user[0];
+} else
 {
     echo "Страница в разработке";
     header("HTTP/1.1 404 Not Found");
