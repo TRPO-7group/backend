@@ -11,8 +11,9 @@ $arResult["repository_description"] = $rep->getDescription();
 $list = $rep->getChildReps();
 foreach ($list as $item)
 {
-    if ($item["status"] == MainClass::$REP_USER_STATUS_ACCEPTED)
+    if ($item["status"] == MainClass::$REP_USER_STATUS_ACCEPTED) {
         $arResult["child_reps"][] = $item;
+    }
 
 }
 
@@ -28,8 +29,10 @@ if ($user["user_id"] && $user["user_type"] == MainClass::$USER_TYPE_STUDENT)
     $arResult["rep_ind_list"] = DB::getList("rep", "rep_id", false, "rep_owner=" . $user["user_id"] . " AND is_ind=" . MainClass::$INDIVIDUAL);
     foreach ($arResult["rep_ind_list"] as &$item)
     {
+
         $repository->loadById($item["rep_id"]);
         $item = $repository->getRepInfo();
+
     }
 
 }

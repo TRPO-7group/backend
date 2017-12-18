@@ -1,21 +1,24 @@
 <?php
+require $_SERVER["DOCUMENT_ROOT"]. "/reposit-catalog/local/lib/php_init.php";
+$rep_id = intval($_GET["rep_id"]);
+$period = intval($_GET["period"]);
+$template=$_GET["template"] ? $_GET["template"] : "individual";
+
+
 $rep = new Repository();
-if ($params['id'] <= 0 || !$rep->loadById(intval($params['id'])))
-{
-    header("HTTP/1.1 404 Not Found");
-    die;
-}
-$cache = new Cache();
-$arResult = $cache->load("detail_" . $params['id']);
-if (!$arResult) {
+$rep->loadById($rep_id);
+
+
+
     $arResult["repository_id"] = $rep->getId();
     $arResult["repository_name"] = $rep->getName();
     $arResult["repository_description"] = $rep->getDescription();
     $arResult["repository_url"] = $rep->getUrl();
-    $arResult['commits_list'] = $rep->getUserCommits();
-    $arResult['commits_lines'] = $rep->getCommitInfoLinesList();
-    $arResult['commits_files'] = $rep->getCommitInfoFilesList();
+    $arResult['commits_list'] = $rep->getUserCommits($period);
+    $arResult['commits_lines'] = $rep->getCommitInfoLinesList($period);
+    $arResult['commits_files'] = $rep->getCommitInfoFilesList($period);
     $arResult["repository_owner"] = $rep->getOwner();
+
 
     $dateNow = new DateTime();
 
@@ -37,7 +40,7 @@ if (!$arResult) {
     $arResult["all_files_modified"] = 0;
     $dateNow = new DateTime();
 
-    for ($i = 0; $i < 30; $i++) {
+    for ($i = 0; $i < $period; $i++) {
         $formated = $dateNow->format("d.m");
         $arResult['commit_chart'][$formated] = 0;
         $arResult['lines_chart'][$formated] = array("add" => 0, "delete" => 0);
@@ -98,11 +101,10 @@ if (!$arResult) {
     $arResult["js_commits"] = implode(",", $arResult["js_commits"]);
     $arResult["js_lines"] = implode(",", $arResult["js_lines"]);
     $arResult["js_files"] = implode(",", $arResult["js_files"]);
-    $cache->save("detail_" . $params['id'],$arResult,30*60);
-}
-
-require $template . ".php";
-
+if ($template == "individual")
+    require "templates/individual.php";
+else
+    require "templates/edu.php";
 
 
 

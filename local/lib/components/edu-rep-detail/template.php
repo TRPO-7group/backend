@@ -23,19 +23,21 @@
 
 foreach ($arResult["child_reps"] as $rep)
 {
+    ?>
+<div class="detail-container">
+    <h3 data-user-id="#<?php echo $rep["user_id"]?>" class="detail-statistic"><?php echo  $rep["user_name"]?><span>[+]</span></h3>
+
+    <?php
     MainClass::includeComponent("rep-detail","edu-template",array('id' => $rep['rep_id'], 'owner_name' => $rep['user_name'], "owner_id" => $rep["user_id"]));
+?>
+</div>
+    <?php
 }
 
 if (count($arResult["child_reps"]) == 0)
 {
     ?>
-<script>
-    setTimeout(function () {
-        $(".back").removeClass("loader");
-        $("#loader").hide();
-    },100);
 
-    </script>
     <?php
 }
 ?>

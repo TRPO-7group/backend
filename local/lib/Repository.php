@@ -5,6 +5,10 @@ require_once "MainClass.php";
 require_once "Cache.php";
 class Repository
 {
+    public static $PERIOD_MOUNTH = 30;
+    public static $PERIOD_THREE_MOUNH =90;
+    public static $PERIOD_WEEK = 7;
+
     /**
      * @return mixed
      */
@@ -250,8 +254,8 @@ class Repository
     }
 
 
-    public function getCommitInfoFilesList(){
-        $commitsList = $this->getUserCommits();
+    public function getCommitInfoFilesList($period = false){
+        $commitsList = $this->getUserCommits($period);
         $res = array();
         foreach ($commitsList as $commit)
         {
@@ -262,8 +266,8 @@ class Repository
         return $res;
     }
 
-    public function getCommitInfoLinesList(){
-        $commitsList = $this->getUserCommits();
+    public function getCommitInfoLinesList($period = false){
+        $commitsList = $this->getUserCommits($period);
         $res = false;
         foreach ($commitsList as $commit)
         {
@@ -330,8 +334,10 @@ class Repository
     }
 
 
-    public function getUserCommits()
+    public function getUserCommits($period = false)
     {
+        if (!$period)
+            $period = self::$PERIOD_MOUNTH;
         $now = new DateTime();
         $date = new DateTime();
         $this->checkReposit();
@@ -356,7 +362,7 @@ class Repository
 
                 $date->setTimestamp($message[2]);
                 $diff = ($now->getTimestamp() - $message[2]) / (60*60*24);
-                if ($diff > 30) break;
+                if ($diff > $period) break;
                 $res[] = array(
                     "sha" => $message[0],
                     "author_name" => $message[1],

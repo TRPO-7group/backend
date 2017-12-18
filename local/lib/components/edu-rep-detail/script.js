@@ -1,4 +1,4 @@
-
+/*
 function loadListener() {
     loadingCount++;
     if (loadingCount >= $(".detail-container").length * 3) //количество диаграмм на странице
@@ -19,11 +19,14 @@ function loadListener() {
             }
         },100);
     }
-}
+}*/
 
 
 $(window).on("load", function () {
-
+    $(".tabs").hide();
+    $("body").removeClass("scroll-hidden");
+    $(".back").removeClass("loader");
+    $("#loader").hide();
     var form = $("#add-ind-rep-form").find("form");
     var allFields =  $("#add-ind-rep-form").find("input");
     var urlField = form.find("#rep_url");
@@ -96,6 +99,18 @@ $(window).on("load", function () {
         dialog.dialog("open");
     })
 
+
+
+    $(document).on("click", ".detail-statistic", function () {
+        if ($(this).closest(".detail-container").find(".tabs").is(":visible"))
+        {
+            $(this).find("span").html("[+]");
+            $(this).closest(".detail-container").find(".tabs").hide(200);
+        } else {
+            $(this).find("span").html("[-]");
+            $(this).closest(".detail-container").find(".tabs").show(200);
+        }
+    })
 
 });
 
