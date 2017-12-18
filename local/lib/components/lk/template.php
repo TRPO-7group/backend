@@ -4,7 +4,11 @@
 
 
 <div class="title-center">
-    <h1>Личный кабинет</h1>
+    <?php if ($arResult["user_info"]){?>
+        <h1>Информация о пользователе</h1>
+    <?php } else {?>
+        <h1>Личный кабинет</h1>
+    <?php }?>
 </div>
 
 <div class="lk-container">
