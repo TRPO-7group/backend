@@ -302,7 +302,7 @@ class Repository
 
                 }
             }
-            $obCache->save($sha,$res,2592000,"info_lines" );
+            $obCache->save($sha,$res,2592000* 3,"info_lines" );
         }
         return $res;
     }
@@ -328,7 +328,7 @@ class Repository
                 }
                 proc_close($process);
             }
-            $obCache->save($sha,$res,2592000, "info_files");
+            $obCache->save($sha,$res,2592000 * 3, "info_files");
         }
     return $res;
     }
