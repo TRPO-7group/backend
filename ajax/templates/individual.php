@@ -1,5 +1,13 @@
 
+<?php if ($period == 30){?>
     <h3 class="detail-statistic">Статистика за последний месяц <span>[+]</span></h3>
+<?php } else if ($period ==  7){?>
+    <h3 class="detail-statistic">Статистика за последнюю неделю <span>[+]</span></h3>
+<?php } else if ($period== 90){?>
+    <h3 class="detail-statistic">Статистика за последние три месяца <span>[+]</span></h3>
+<?php }?>
+
+
     <div class="detail-commits-all">
         <div>
             <?php if ($period == 30){?>
