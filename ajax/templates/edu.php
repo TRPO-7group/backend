@@ -2,7 +2,14 @@
     <div>
         <div>
             <div>
+                <?php if ($period == 30){?>
                 Коммитов за последний месяц:  <?php echo count($arResult["commits_list"]);?>
+                <?php } else if ($period ==  7){?>
+                    Коммитов за последнюю неделю:  <?php echo count($arResult["commits_list"]);?>
+                <?php } else if ($period== 90){?>
+                    Коммитов за последние три месяца:  <?php echo count($arResult["commits_list"]);?>
+                <?php }?>
+
             </div>
             <table border="1" cellspacing="0" cellpadding="5px">
                 <tr>
