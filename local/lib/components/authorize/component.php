@@ -27,13 +27,13 @@ $storage = new Session();
 $credentialsGoogle = new Credentials(
     $servicesCredentials['google']['key'],
     $servicesCredentials['google']['secret'],
-   "http://reposit-catalog.ru/reposit-catalog/?auth_from=google"
+   "http://reposit-catalog.tk/reposit-catalog/?auth_from=google"
 );
 
 $credentialsGitHub = new Credentials(
     $servicesCredentials['github']['key'],
     $servicesCredentials['github']['secret'],
-    "http://reposit-catalog.ru/reposit-catalog/?auth_from=github"
+    "http://reposit-catalog.tk/reposit-catalog/?auth_from=github"
 );
 
 
