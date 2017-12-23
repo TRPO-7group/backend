@@ -40,3 +40,12 @@ method - rep_info
 args[id] - id репозитория
 возвращает информацию о репощитории
 /reposit-catalog/api/get.php?method=rep_info&args[id]=3
+
+6. Детальная информация о репозитории
+method - detail_rep_info
+args[id] - id репозитория
+args[period] - период в днях
+
+Возвращает детальную информацию о репозитории за определенный период
+
+http://reposit-catalog.tk/reposit-catalog/api/get.php?method=detail_rep_info&args[id]=1&args[period]=30
