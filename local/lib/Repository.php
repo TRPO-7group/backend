@@ -461,6 +461,8 @@ class FileTypes{
             if ($res[$max] < $typeCount)
                 $max = $key;
         }
+        if  ($res[$max] == 0)
+            return false;
         return $max;
     }
 }
