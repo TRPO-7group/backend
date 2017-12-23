@@ -44,5 +44,11 @@ switch ($_REQUEST["method"])
             echo json_encode($repository->getRepInfo());
         }
         break;
+    case "detail_rep_info":
+        if ($_REQUEST["args"]["id"] && $_REQUEST["args"]["period"])
+        {
+            echo json_encode(MainClass::getRepDetailInfo($_REQUEST["args"]["id"],$_REQUEST["args"]["period"] ));
+        }
+        break;
     default: echo json_encode("Error");
 }

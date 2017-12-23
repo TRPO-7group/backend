@@ -285,8 +285,6 @@ class MainClass
             }
             $dateNow->sub(new DateInterval("P1D"));
         }
-
-        $arResult["files_add_for_popup"] = implode("\n", $arResult["files_add_for_popup"]);
         $arResult["commit_chart"] = array_reverse($arResult["commit_chart"]);
         $arResult["files_chart"] = array_reverse($arResult["files_chart"]);
         $arResult["lines_chart"] = array_reverse($arResult["lines_chart"]);
