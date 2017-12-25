@@ -37,7 +37,11 @@ foreach ($arResult["child_reps"] as $rep)
 if (count($arResult["child_reps"]) == 0)
 {
     ?>
-
+    <script>
+        $(".back").removeClass("loader");
+        $("body").removeClass("scroll-hidden");
+        $("#loader").hide();
+    </script>
     <?php
 }
 ?>
