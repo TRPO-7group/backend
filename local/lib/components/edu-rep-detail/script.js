@@ -1,3 +1,4 @@
+var loadingCount=0;
 window.firstTime = true;
 function loadListener() {
     loadingCount++;

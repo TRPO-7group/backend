@@ -41,7 +41,6 @@
             </table>
         </div>
         <script type="text/javascript">
-            var loadingCount = 0;
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart<?php echo $arResult["repository_id"] . "_" . $period?>);
 
