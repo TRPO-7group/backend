@@ -229,7 +229,6 @@ class MainClass
 
     public static function getRepDetailInfo($rep_id , $period = 30, $fileMask = false)
     {
-
         $rep = new Repository();
         $rep->loadById($rep_id);
         $arResult["repository_id"] = $rep->getId();

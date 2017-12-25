@@ -38,7 +38,6 @@
             <div class="header-menu">
                 <a href="/reposit-catalog/">Личные репозитории</a>
                 <a href="/reposit-catalog/edu.php">Учебные репозитории</a>
-                <img src="/reposit-catalog//local/markup/build/img/search.png" class="js-popup-search">
             </div>
         </div>
     </div>

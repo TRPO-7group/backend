@@ -49,7 +49,13 @@ args[id] - id репозитория
 method - detail_rep_info
 args[id] - id репозитория
 args[period] - период в днях
+args[mask] - маска для файлов (опционально. Расширения должны быть заданычерез запятую и пробел)
 
-Возвращает детальную информацию о репозитории за определенный период
+Возвращает детальную информацию о репозитории за определенный период, по файлам с определенной маской
 
-http://reposit-catalog.tk/reposit-catalog/api/get.php?method=detail_rep_info&args[id]=1&args[period]=30
+http://192.168.1.85/reposit-catalog/api/get.php?method=detail_rep_info&args[id]=1&args[period]=30&args[mask]=sass,%20css
+
+7. Получить список масок
+method - mask_list
+
+http://192.168.1.85/reposit-catalog/api/get.php?method=mask_list

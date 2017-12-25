@@ -58,8 +58,16 @@ switch ($_REQUEST["method"])
     case "detail_rep_info":
         if ($_REQUEST["args"]["id"] && $_REQUEST["args"]["period"])
         {
-            echo json_encode(MainClass::getRepDetailInfo($_REQUEST["args"]["id"],$_REQUEST["args"]["period"] ));
+            $file_mask = false;
+            if ($_REQUEST["args"]["mask"])
+                $file_mask = explode(", ", $_REQUEST["args"]["mask"]);
+            $res = MainClass::getRepDetailInfo($_REQUEST["args"]["id"],$_REQUEST["args"]["period"], $file_mask);
+            unset($res["all_commits_list"]);
+            echo json_encode($res);
         }
+        break;
+    case "mask_list":
+        echo json_encode(MainClass::getMasks());
         break;
     default: echo json_encode("Error");
 }
