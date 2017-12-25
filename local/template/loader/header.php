@@ -12,8 +12,9 @@
     <script src="/reposit-catalog/local/markup/build/js/main.js"></script>
     <script src="/reposit-catalog/local/markup/multi-select/jquery.multi-select.js"></script>
 </head>
-<div class="back">
+<div class="back loader">
 </div>
+<div id="loader"></div>
 <header>
     <div class="header-section">
 

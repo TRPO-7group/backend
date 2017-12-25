@@ -1,10 +1,10 @@
 
 <?php if ($period == 30){?>
-    <h3 class="detail-statistic">Статистика за последний месяц <span>[+]</span></h3>
+    <h3>Статистика за последний месяц</h3>
 <?php } else if ($period ==  7){?>
-    <h3 class="detail-statistic">Статистика за последнюю неделю <span>[+]</span></h3>
+    <h3>Статистика за последнюю неделю</h3>
 <?php } else if ($period== 90){?>
-    <h3 class="detail-statistic">Статистика за последние три месяца <span>[+]</span></h3>
+    <h3 >Статистика за последние три месяца</h3>
 <?php }?>
 
 
@@ -97,6 +97,7 @@
             };
             var chart = new google.visualization.LineChart(document.getElementById('curve_chart_lines<?php echo $arResult["repository_id"] . "_" . $period?>'));
             chart.draw(data, options);
+        $(".detail-commits-all").show();
         }
 
         function drawChart<?php echo $arResult["repository_id"] . "_" . $period?>() {

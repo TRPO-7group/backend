@@ -29,6 +29,14 @@
 
 
     $( function() {
+
+        setTimeout(function () {
+            $(".back").removeClass("loader");
+            $("body").removeClass("scroll-hidden");
+            $("#loader").hide(); $(".back").removeClass("loader");
+            $("body").removeClass("scroll-hidden");
+            $("#loader").hide();
+        }, 150);
         var select =  $('#mask');
         var tabs = $( ".tabs" );
         tabs.tabs({

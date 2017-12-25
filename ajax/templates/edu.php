@@ -41,6 +41,7 @@
             </table>
         </div>
         <script type="text/javascript">
+            var loadingCount = 0;
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart<?php echo $arResult["repository_id"] . "_" . $period?>);
 
@@ -55,7 +56,7 @@
                     legend: { position: 'bottom' }
                 };
                 var chart = new google.visualization.LineChart(document.getElementById('curve_chart_files<?php echo $arResult["repository_id"] . "_" . $period?>'));
-
+                google.visualization.events.addListener(chart, 'ready', loadListener);
                 chart.draw(data, options);
             }
 
@@ -71,7 +72,7 @@
                     legend: { position: 'bottom' }
                 };
                 var chart = new google.visualization.LineChart(document.getElementById('curve_chart_commit<?php echo $arResult["repository_id"] . "_" . $period?>'));
-
+                google.visualization.events.addListener(chart, 'ready', loadListener);
                 chart.draw(data, options);
 
             }
@@ -88,7 +89,7 @@
                     legend: { position: 'bottom' }
                 };
                 var chart = new google.visualization.LineChart(document.getElementById('curve_chart_lines<?php echo $arResult["repository_id"] . "_" . $period?>'));
-
+                google.visualization.events.addListener(chart, 'ready', loadListener);
                 chart.draw(data, options);
             }
 
@@ -98,10 +99,6 @@
                 drawChartLines<?php echo $arResult["repository_id"] . "_" . $period?>();
 
             }
-
-
-
-
         </script>
         <div id="curve_chart_commit<?php echo $arResult["repository_id"] . "_" . $period?>" style="width: 370px; height: 200px; display: inline-block"></div>
         <div id="curve_chart_files<?php echo $arResult["repository_id"] . "_" . $period?>" style="width: 370px; height: 200px; display: inline-block"></div>

@@ -1,9 +1,12 @@
-/*
+window.firstTime = true;
 function loadListener() {
     loadingCount++;
-    if (loadingCount >= $(".detail-container").length * 3) //количество диаграмм на странице
+
+    if (loadingCount >= $(".detail-container").length * 3 && window.firstTime) //количество диаграмм на странице
     {
         $(".detail-container > div").addClass("detail-commits-all");
+        $(".tabs").hide();
+        window.firstTime = false;
         setTimeout(function () {
             $(".back").removeClass("loader");
             $("body").removeClass("scroll-hidden");
@@ -19,11 +22,10 @@ function loadListener() {
             }
         },100);
     }
-}*/
-
+}
 
 $(window).on("load", function () {
-    $(".tabs").hide();
+
     $("body").removeClass("scroll-hidden");
     var form = $("#add-ind-rep-form").find("form");
     var allFields =  $("#add-ind-rep-form").find("input");
@@ -99,18 +101,7 @@ $(window).on("load", function () {
 
 
 
-    $(document).on("click", ".detail-statistic", function () {
-        if ($(this).closest(".detail-container").find(".tabs").is(":visible"))
-        {
-            $(this).find("span").html("[+]");
-            $(this).closest(".detail-container").find(".tabs").hide(200);
-            $(this).closest(".detail-container").find(".demo-example").hide(200);
-        } else {
-            $(this).find("span").html("[-]");
-            $(this).closest(".detail-container").find(".tabs").show(200);
-            $(this).closest(".detail-container").find(".demo-example").show(200);
-        }
-    })
+
 
 });
 
