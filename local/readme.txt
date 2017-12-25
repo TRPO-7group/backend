@@ -53,9 +53,9 @@ args[mask] - маска для файлов (опционально. Расши�
 
 Возвращает детальную информацию о репозитории за определенный период, по файлам с определенной маской
 
-http://192.168.1.85/reposit-catalog/api/get.php?method=detail_rep_info&args[id]=1&args[period]=30&args[mask]=sass,%20css
+http://reposit-catalog.tk/reposit-catalog/api/get.php?method=detail_rep_info&args[id]=1&args[period]=30&args[mask]=sass,%20css
 
 7. Получить список масок
 method - mask_list
 
-http://192.168.1.85/reposit-catalog/api/get.php?method=mask_list
+http://reposit-catalog.tk/reposit-catalog/api/get.php?method=mask_list
