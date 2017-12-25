@@ -1,8 +1,7 @@
 window.firstTime = true;
 function loadListener() {
     loadingCount++;
-
-    if (loadingCount >= $(".detail-container").length * 3 && window.firstTime) //количество диаграмм на странице
+    if ((loadingCount >= $(".detail-container").length * 3) && window.firstTime) //количество диаграмм на странице
     {
         $(".detail-container > div").addClass("detail-commits-all");
         $(".tabs").hide();
