@@ -32,12 +32,27 @@ class MainClass
 
     static  public function getRepositoryList($type = 2, $group = true, $page = false, $countOnPage=false, &$existNextPage = false, $user_id = false)
     {
-        $where = "";
-        if ($type != MainClass::$BOTH)
-        {
-            $where = "rep.is_ind=$type";
-        }
-        $list = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage, "sort");
+        if (($type == MainClass::$BOTH || $type == MainClass::$INDIVIDUAL) && !$user_id) return array();
+        if ($type == MainClass::$BOTH) {
+            $where = "rep.is_ind=" . MainClass::$EDU;
+            $list1 = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage, "sort");
+            $where = "rep.is_ind=" . MainClass::$INDIVIDUAL . " AND rep_owner=" . $user_id;
+            $list2 = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage, "sort");
+            $list = array_merge($list1, $list2);
+        } else
+            {
+                if ($type == MainClass::$INDIVIDUAL)
+                {
+                    $where = "rep.is_ind=" . MainClass::$INDIVIDUAL . " AND rep_owner=" . $user_id;
+                    $list = $list1 = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage, "sort");
+                }
+                else
+                {
+                    $where = "rep.is_ind=" . MainClass::$EDU;
+                    $list = $list1 = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage, "sort");
+                }
+            }
+        //$list = DB::getList("rep","*",array("disc" => array("rep.rep_disc", "disc.id")), $where,$page,$countOnPage,$existNextPage, "sort");
         $res = array();
         foreach ($list as $row) {
             $rep = new Repository();
@@ -290,4 +305,12 @@ class MainClass
         $arResult["lines_chart"] = array_reverse($arResult["lines_chart"]);
         return $arResult;
     }
+
+
+    public static function getUserByEmail($email)
+    {
+        $user = DB::getList("user", "*", false, "user_mail='".$email . "'");
+        return $user[0];
+    }
+
 }

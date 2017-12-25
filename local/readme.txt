@@ -16,10 +16,14 @@ args[id] - id - репозитория
 2.
 Список репозиториев
 method - rep_list
-args[group] - группировать по дисциплинам (Опционально Y - если нужно группировать)
+args[group] - группировать по дисциплинам (Опционально Y - если нужно группировать) (Лучше не использовать)
 args[type] - тип репозитория (опционально, по умалчанию оба) значения: edu - учебные, individual - индивидуальные
+Если тип не задан или individual, то дополнительно необходимо передать один из следующих параметров
+    args[user_id] - id пользователя в система
+    args[user_email] - почта пользователя
+
 пример запроса:
-/reposit-catalog/api/get.php?method=rep_list&args[group]=Y
+http://reposit-catalog.ru/reposit-catalog/api/get.php?method=rep_list&args[user_email]=aa@mail.ru
 
 3.
 Список измененных файлов

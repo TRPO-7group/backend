@@ -21,7 +21,18 @@ switch ($_REQUEST["method"])
             $type = MainClass::$EDU;
         if ($_REQUEST["args"]["group"] == "Y")
             $group = true;
-        echo json_encode(MainClass::getRepositoryList($type, $group));
+       $user_id = false;
+        if ($type == MainClass::$BOTH || $type == MainClass::$INDIVIDUAL)
+        {
+            if (intval($_REQUEST["args"]["user_id"]) > 0)
+                $user_id = $_REQUEST["args"]["user_id"];
+            else if($_REQUEST["args"]["user_email"])
+            {
+                $user = MainClass::getUserByEmail($_REQUEST["args"]["user_email"]);
+                $user_id = $user["user_id"];
+            } else break;
+        }
+        echo json_encode(MainClass::getRepositoryList($type, $group,false, false,$exists,$user_id));
         break;
     case "commit_info_lines_list":
         if ($_REQUEST["args"]["id"])
