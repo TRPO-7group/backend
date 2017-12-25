@@ -11,7 +11,7 @@
             <?php foreach ($arResult["masks_list"] as $category){
                 foreach ($category as $mask) {
                 ?>
-                <option value="<?php echo $mask["value"]?>"> <?php echo $mask["name"]?> </option>
+                <option value="<?php echo $mask["value"]?>"> <?php echo $mask["name"]?> (<?php echo $mask["value"]?>)</option>
             <?php }
             }?>
         </select>
