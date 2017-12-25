@@ -15,8 +15,7 @@ if ($params['id'] <= 0 || !$rep->loadById(intval($params['id'])))
     $arResult['commits_lines'] = $rep->getCommitInfoLinesList();
     $arResult['commits_files'] = $rep->getCommitInfoFilesList();
     $arResult["repository_owner"] = $rep->getOwner();
-
-
+    $arResult["masks_list"] = MainClass::getMasks();
 require $template . ".php";
 
 

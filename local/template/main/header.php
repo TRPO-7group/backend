@@ -5,10 +5,13 @@
     <meta charset="utf-8">
     <title>Title</title>
     <link rel="stylesheet" href="/reposit-catalog/local/markup/build/default.css" type="text/css"/>
+    <link rel="stylesheet" href="/reposit-catalog/local/markup/multi-select/example-styles.css" type="text/css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
    <script src="/reposit-catalog/local/markup/build/js/jquery.js"></script>
     <script src="/reposit-catalog/local/markup/build/js/jquery-ui.js"></script>
     <script src="/reposit-catalog/local/markup/build/js/main.js"></script>
+    <script src="/reposit-catalog/local/markup/multi-select/jquery.multi-select.js"></script>
 </head>
 <div class="back">
 </div>

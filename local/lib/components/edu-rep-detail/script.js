@@ -104,9 +104,11 @@ $(window).on("load", function () {
         {
             $(this).find("span").html("[+]");
             $(this).closest(".detail-container").find(".tabs").hide(200);
+            $(this).closest(".detail-container").find(".demo-example").hide(200);
         } else {
             $(this).find("span").html("[-]");
             $(this).closest(".detail-container").find(".tabs").show(200);
+            $(this).closest(".detail-container").find(".demo-example").show(200);
         }
     })
 

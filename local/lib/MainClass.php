@@ -227,7 +227,7 @@ class MainClass
         }
     }
 
-    public static function getRepDetailInfo($rep_id , $period = 30)
+    public static function getRepDetailInfo($rep_id , $period = 30, $fileMask = false)
     {
 
         $rep = new Repository();
@@ -236,18 +236,20 @@ class MainClass
         $arResult["repository_name"] = $rep->getName();
         $arResult["repository_description"] = $rep->getDescription();
         $arResult["repository_url"] = $rep->getUrl();
-        $arResult['commits_list'] = $rep->getUserCommits($period);
-        $arResult['commits_lines'] = $rep->getCommitInfoLinesList($period);
-        $arResult['commits_files'] = $rep->getCommitInfoFilesList($period);
+        $arResult['all_commits_list'] = $rep->getUserCommits($period);
+        $arResult['commits_lines'] = $rep->getCommitInfoLinesList($period, $fileMask);
+        $arResult['commits_files'] = $rep->getCommitInfoFilesList($period, $fileMask);
         $arResult["repository_owner"] = $rep->getOwner();
-
+        $arResult["really_commits_list"] = array_merge(array_keys( $arResult['commits_lines']),  array_keys($arResult['commits_files']));
 
         $dateNow = new DateTime();
 
         $arResult['dates'] = array();
-        foreach ($arResult['commits_list'] as $commit) {
-            $dateNow->setTimestamp($commit["date"]);
-            $arResult['dates'][$dateNow->format("d.m")][] = $commit["sha"];
+        foreach ($arResult['all_commits_list'] as $commit) {
+            if (in_array($commit["sha"],$arResult["really_commits_list"] )) {
+                $dateNow->setTimestamp($commit["date"]);
+                $arResult['dates'][$dateNow->format("d.m")][] = $commit["sha"];
+            }
         }
 
         $arResult['commit_chart'] = array();
@@ -311,6 +313,25 @@ class MainClass
     {
         $user = DB::getList("user", "*", false, "user_mail='".$email . "'");
         return $user[0];
+    }
+
+    public static function getMasks()
+    {
+        $list = DB::getList("masks", "masks.*, mask_category.name as category_name", array("mask_category" => array("masks.category", "mask_category.id")));
+        $res = array();
+        foreach ($list as $mask)
+        {
+            //$mask["value"] = explode(", ", $mask["value"]);
+            $res[$mask["category_name"]][] = $mask;
+        }
+        return $res;
+    }
+
+    public static function pre($var)
+    {
+        echo "<pre>";
+        var_dump($var);
+        echo "</pre>";
     }
 
 }

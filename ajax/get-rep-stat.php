@@ -2,8 +2,13 @@
     require $_SERVER["DOCUMENT_ROOT"]. "/reposit-catalog/local/lib/php_init.php";
     $rep_id = intval($_GET["rep_id"]);
     $period = intval($_GET["period"]);
+    $mask=false;
+    if ($_GET["mask"])
+    {
+        $mask = explode(", ", $_GET["mask"]);
+    }
     $template=$_GET["template"] ? $_GET["template"] : "individual";
-    $arResult = MainClass::getRepDetailInfo($rep_id, $period);
+    $arResult = MainClass::getRepDetailInfo($rep_id, $period, $mask);
     $arResult["js_commits"] = array();
     $arResult["js_lines"] = array();
     $arResult["js_files"] = array();

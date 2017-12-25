@@ -254,34 +254,37 @@ class Repository
     }
 
 
-    public function getCommitInfoFilesList($period = false){
+    public function getCommitInfoFilesList($period = false,  $fileMask = false){
         $commitsList = $this->getUserCommits($period);
         $res = array();
         foreach ($commitsList as $commit)
         {
-            $result = $this->getCommitInfoFiles($commit["sha"]);
+            $result = $this->getCommitInfoFiles($commit["sha"], $fileMask);
             if ($result)
                 $res[$commit["sha"]] = $result;
         }
         return $res;
     }
 
-    public function getCommitInfoLinesList($period = false){
+    public function getCommitInfoLinesList($period = false, $fileMask = false){
         $commitsList = $this->getUserCommits($period);
-        $res = false;
+        $res = array();
         foreach ($commitsList as $commit)
         {
-            $result = $this->getCommitInfoLines($commit["sha"]);
+            $result = $this->getCommitInfoLines($commit["sha"], $fileMask);
             if ($result)
                 $res[$commit["sha"]] = $result;
         }
         return $res;
     }
 
-    public function getCommitInfoLines($sha){
+    public function getCommitInfoLines($sha, $fileMask = false){
         $descriptors = $this->getDescriptors();
         $obCache = new Cache();
-        $res = $obCache->load($sha,"info_lines");
+        $cacheKey = $sha;
+        if ($fileMask)
+            $cacheKey .= md5(serialize($fileMask));
+        $res = $obCache->load($cacheKey,"info_lines");
         if (!$res) {
             $process = proc_open("git show --numstat $sha", $descriptors, $pipes, $this->makeRepositPath());
             $res = false;
@@ -293,26 +296,36 @@ class Repository
                 foreach ($out as $file) {
                     if (strlen($file)) {
                         $fileInfo = explode("\t", $file, 3);
-                        $res[] = array(
-                            "file_name" => $fileInfo[2],
-                            "add" => $fileInfo[0],
-                            "delete" => $fileInfo[1]
-                        );
+                        $ok = true;
+                        if (is_array($fileMask)) {
+                            $extInfo = pathinfo($fileInfo[2]);
+                            $ok = in_array($extInfo["extension"], $fileMask);
+                        }
+                        if ($ok) {
+                            $res[] = array(
+                                "file_name" => $fileInfo[2],
+                                "add" => $fileInfo[0],
+                                "delete" => $fileInfo[1]
+                            );
+                        }
                     }
 
                 }
             }
-            $obCache->save($sha,$res,2592000* 3,"info_lines" );
+            $obCache->save($cacheKey,$res,2592000* 3,"info_lines" );
         }
         return $res;
     }
 
-    public function getCommitInfoFiles($sha)
+    public function getCommitInfoFiles($sha, $fileMask = false)
     {
         $this->checkReposit();
         $descriptors = $this->getDescriptors();
         $obCache = new Cache();
-        $res = $obCache->load($sha,"info_files");
+        $cacheKey = $sha;
+        if ($fileMask)
+            $cacheKey .= md5(serialize($fileMask));
+        $res = $obCache->load($cacheKey,"info_files");
         if (!$res) {
             $process = proc_open("git show --name-status $sha", $descriptors, $pipes, $this->makeRepositPath());
             $res = false;
@@ -323,12 +336,19 @@ class Repository
                 foreach ($out as $file) {
                     if (strlen($file)) {
                         $fileInfo = explode("\t", $file, 2);
-                        $res[$fileInfo[0]][] = $fileInfo[1];
-                    }
+                        $ok = true;
+                        if (is_array($fileMask)) {
+                            $extInfo = pathinfo($fileInfo[1]);
+                            $ok = in_array($extInfo["extension"], $fileMask);
+                        }
+                        if ($ok) {
+                            $res[$fileInfo[0]][] = $fileInfo[1];
+                        }
+                        }
                 }
                 proc_close($process);
             }
-            $obCache->save($sha,$res,2592000 * 3, "info_files");
+            $obCache->save($cacheKey,$res,2592000 * 3, "info_files");
         }
     return $res;
     }
