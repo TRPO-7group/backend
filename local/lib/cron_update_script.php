@@ -1,10 +1,10 @@
 <?php
 require "php_init.php";
-$list = MainClass::getRepositoryList(MainClass::$BOTH,false);
+$list = DB::getList("rep", "rep_id");
 $repository = new Repository();
 foreach ($list as $rep)
 {
-    $repository->loadById($rep["id"]);
+    $repository->loadById($rep["rep_id"]);
     $repository->updateReposit();
 }
 
