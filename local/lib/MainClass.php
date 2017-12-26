@@ -57,7 +57,7 @@ class MainClass
         foreach ($list as $row) {
             $rep = new Repository();
             $rep->loadById($row["rep_id"]);
-            $commits = $rep->getUserCommits(false, $lastCommit);
+            $commits = $rep->getUserCommits(0, $lastCommit);
             $tegsList = DB::getList("reptegs","*",
                 array("teg" => array("reptegs.tegid", "teg.teg_id")),
                 "repid=".$row["rep_id"]

@@ -356,7 +356,7 @@ class Repository
 
     public function getUserCommits($period = false, &$lastCommit)
     {
-        if (!$period)
+        if ($period===false)
             $period = self::$PERIOD_MOUNTH;
         $now = new DateTime();
         $date = new DateTime();
