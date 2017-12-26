@@ -450,7 +450,7 @@ class Repository
             "is_individual" => $this->getIndividual(),
             "owner" => $this->getOwner(),
             "url" => $this->getUrl(),
-            "discipline" => array("id" => $this->getDiscpline(), "name" => $discipline_name),
+            "discipline" => $discipline_name,
             "last_commit" => $lastCommit["date"],
             "link" => $this->getLink(),
             "child_reps" => $this->getChildReps()
