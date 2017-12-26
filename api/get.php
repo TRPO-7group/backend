@@ -10,7 +10,7 @@ switch ($_REQUEST["method"])
 {
     case "commits_list":
         $repository->loadById($_REQUEST["args"]["id"]);
-        echo json_encode($repository->getUserCommits());
+        echo json_encode($repository->getUserCommits(false, $lastCommit));
         break;
     case "rep_list":
         $type = MainClass::$BOTH;

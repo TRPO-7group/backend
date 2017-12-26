@@ -57,7 +57,7 @@ class MainClass
         foreach ($list as $row) {
             $rep = new Repository();
             $rep->loadById($row["rep_id"]);
-            $commits = $rep->getUserCommits();
+            $commits = $rep->getUserCommits(false, $lastCommit);
             $tegsList = DB::getList("reptegs","*",
                 array("teg" => array("reptegs.tegid", "teg.teg_id")),
                 "repid=".$row["rep_id"]
@@ -75,7 +75,7 @@ class MainClass
                 "parent_rep" => $row["pater_rep"],
                 "owner" => $row["rep_owner"],
                 "discipline" => $row['name'],
-                "last_commit" => $commits[0]["date"],
+                "last_commit" => $lastCommit["date"],
                 "tegs" => $tegs,
                 "link" => $rep->getLink(),
                 "language" => $rep->getLanguage() ? $rep->getLanguage() : "Язык не определен"
@@ -239,7 +239,7 @@ class MainClass
             $arResult["repository_name"] = $rep->getName();
             $arResult["repository_description"] = $rep->getDescription();
             $arResult["repository_url"] = $rep->getUrl();
-            $arResult['all_commits_list'] = $rep->getUserCommits($period);
+            $arResult['all_commits_list'] = $rep->getUserCommits($period, $lastCommit);
             $arResult['commits_lines'] = $rep->getCommitInfoLinesList($period, $fileMask);
             $arResult['commits_files'] = $rep->getCommitInfoFilesList($period, $fileMask);
             $arResult["repository_owner"] = $rep->getOwner();

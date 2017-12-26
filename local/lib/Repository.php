@@ -255,7 +255,7 @@ class Repository
 
 
     public function getCommitInfoFilesList($period = false,  $fileMask = false){
-        $commitsList = $this->getUserCommits($period);
+        $commitsList = $this->getUserCommits($period, $lastCommit);
         $res = array();
         foreach ($commitsList as $commit)
         {
@@ -267,7 +267,7 @@ class Repository
     }
 
     public function getCommitInfoLinesList($period = false, $fileMask = false){
-        $commitsList = $this->getUserCommits($period);
+        $commitsList = $this->getUserCommits($period,  $lastCommit);
         $res = array();
         foreach ($commitsList as $commit)
         {
@@ -354,7 +354,7 @@ class Repository
     }
 
 
-    public function getUserCommits($period = false)
+    public function getUserCommits($period = false, &$lastCommit)
     {
         if (!$period)
             $period = self::$PERIOD_MOUNTH;
@@ -382,7 +382,15 @@ class Repository
 
                 $date->setTimestamp($message[2]);
                 $diff = ($now->getTimestamp() - $message[2]) / (60*60*24);
-                if ($diff > $period) break;
+                if ($diff > $period) {
+                    $lastCommit =  array(
+                        "sha" => $message[0],
+                        "author_name" => $message[1],
+                        "date" => $message[2],
+                        "message" => $message[3]
+                    );
+                    break;
+                }
                 $res[] = array(
                     "sha" => $message[0],
                     "author_name" => $message[1],
@@ -402,7 +410,7 @@ class Repository
     public function getChildReps()
     {
         $listReps = DB::getList("rep_user_status","*",array('rep' => array("rep_user_status.user_rep", "rep.rep_id"), "user" => array("rep_user_status.user_id", "user.user_id")),"rep_user_status.rep_id=" . $this->getId());
-        $commits = $this->getUserCommits();
+        $commits = $this->getUserCommits(false,  $lastCommit);
         $res = array();
         foreach ($listReps as $member)
         {
@@ -411,7 +419,7 @@ class Repository
                 "rep_id" => $member["rep_id"],
                 "user_name" => $member["name"],
                 "user_id" => $member["user_id"],
-                "last_commit" => $commits[0]["date"],
+                "last_commit" => $lastCommit["date"],
                 "status" => $member["status"]
             );
         }
@@ -421,7 +429,7 @@ class Repository
     public function getRepInfo()
     {
 
-        $commits = $this->getUserCommits();
+        $commits = $this->getUserCommits(false, $lastCommit);
         $discipline_name = null;
 
         if ($this->getDiscpline()) {
@@ -443,7 +451,7 @@ class Repository
             "owner" => $this->getOwner(),
             "url" => $this->getUrl(),
             "discipline" => array("id" => $this->getDiscpline(), "name" => $discipline_name),
-            "last_commit" => $commits[0]["date"],
+            "last_commit" => $lastCommit["date"],
             "link" => $this->getLink()
         );
     }
