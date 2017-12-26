@@ -229,81 +229,87 @@ class MainClass
 
     public static function getRepDetailInfo($rep_id , $period = 30, $fileMask = false)
     {
-        $rep = new Repository();
-        $rep->loadById($rep_id);
-        $arResult["repository_id"] = $rep->getId();
-        $arResult["repository_name"] = $rep->getName();
-        $arResult["repository_description"] = $rep->getDescription();
-        $arResult["repository_url"] = $rep->getUrl();
-        $arResult['all_commits_list'] = $rep->getUserCommits($period);
-        $arResult['commits_lines'] = $rep->getCommitInfoLinesList($period, $fileMask);
-        $arResult['commits_files'] = $rep->getCommitInfoFilesList($period, $fileMask);
-        $arResult["repository_owner"] = $rep->getOwner();
-        $arResult["really_commits_list"] = array_merge(array_keys( $arResult['commits_lines']),  array_keys($arResult['commits_files']));
+        $obCache = new Cache();
+        $key = serialize(array($rep_id, $period, $fileMask));
+        $arResult = $obCache->load($key, "detail");
+        if (!$arResult) {
+            $rep = new Repository();
+            $rep->loadById($rep_id);
+            $arResult["repository_id"] = $rep->getId();
+            $arResult["repository_name"] = $rep->getName();
+            $arResult["repository_description"] = $rep->getDescription();
+            $arResult["repository_url"] = $rep->getUrl();
+            $arResult['all_commits_list'] = $rep->getUserCommits($period);
+            $arResult['commits_lines'] = $rep->getCommitInfoLinesList($period, $fileMask);
+            $arResult['commits_files'] = $rep->getCommitInfoFilesList($period, $fileMask);
+            $arResult["repository_owner"] = $rep->getOwner();
+            $arResult["really_commits_list"] = array_merge(array_keys($arResult['commits_lines']), array_keys($arResult['commits_files']));
 
-        $dateNow = new DateTime();
+            $dateNow = new DateTime();
 
-        $arResult['dates'] = array();
-        foreach ($arResult['all_commits_list'] as $commit) {
-            if (in_array($commit["sha"],$arResult["really_commits_list"] )) {
-                $dateNow->setTimestamp($commit["date"]);
-                $arResult['dates'][$dateNow->format("d.m")][] = $commit["sha"];
-            }
-        }
-
-        $arResult['commit_chart'] = array();
-        $arResult['lines_chart'] = array();
-        $arResult['files_chart'] = array();
-
-        $arResult["all_lines_add"] = 0;
-        $arResult["all_lines_delete"] = 0;
-
-        $arResult["all_files_add"] = 0;
-        $arResult["all_files_delete"] = 0;
-        $arResult["all_files_modified"] = 0;
-        $dateNow = new DateTime();
-
-        for ($i = 0; $i < $period; $i++) {
-            $formated = $dateNow->format("d.m");
-            $arResult['commit_chart'][$formated] = 0;
-            $arResult['lines_chart'][$formated] = array("add" => 0, "delete" => 0);
-            $arResult["files_chart"][$formated] = array("add" => 0, "modifed" => 0, "delete" => 0);
-            if (array_key_exists($formated, $arResult["dates"])) {
-                foreach ($arResult["dates"][$formated] as $sha) {
-                    $arResult['commit_chart'][$formated]++;
-                    foreach ($arResult["commits_lines"][$sha] as $commit) {
-                        $arResult["all_lines_add"] += $commit['add'];
-                        $arResult["all_lines_delete"] += $commit['delete'];
-
-                        $arResult['lines_chart'][$formated]["add"] += $commit['add'];
-                        $arResult['lines_chart'][$formated]["delete"] += $commit['delete'];
-                    }
-
-                    foreach ($arResult["commits_files"][$sha]["A"] as $file) {
-                        $filesAddForPopup[$formated][] = "+ " . $file;
-                    }
-
-                    foreach ($arResult["commits_files"][$sha]["M"] as $file) {
-                        $filesModifiedForPopup[$formated][] = $file;
-                    }
-
-                    foreach ($arResult["commits_files"][$sha]["D"] as $file) {
-                        $filesDeleteForPopup[$formated][] = "- " . $file;
-                    }
-                    $arResult["all_files_add"] += count($arResult["commits_files"][$sha]["A"]);
-                    $arResult["all_files_modified"] += count($arResult["commits_files"][$sha]["M"]);
-                    $arResult["all_files_delete"] += count($arResult["commits_files"][$sha]["D"]);
-
-                    $arResult["files_chart"][$formated]['add'] += count($arResult["commits_files"][$sha]["A"]);
-                    $arResult["files_chart"][$formated]['modifed'] += count($arResult["commits_files"][$sha]["M"]);
-                    $arResult["files_chart"][$formated]['delete'] += count($arResult["commits_files"][$sha]["D"]);
+            $arResult['dates'] = array();
+            foreach ($arResult['all_commits_list'] as $commit) {
+                if (in_array($commit["sha"], $arResult["really_commits_list"])) {
+                    $dateNow->setTimestamp($commit["date"]);
+                    $arResult['dates'][$dateNow->format("d.m")][] = $commit["sha"];
                 }
             }
-            $dateNow->sub(new DateInterval("P1D"));
+
+            $arResult['commit_chart'] = array();
+            $arResult['lines_chart'] = array();
+            $arResult['files_chart'] = array();
+
+            $arResult["all_lines_add"] = 0;
+            $arResult["all_lines_delete"] = 0;
+
+            $arResult["all_files_add"] = 0;
+            $arResult["all_files_delete"] = 0;
+            $arResult["all_files_modified"] = 0;
+            $dateNow = new DateTime();
+
+            for ($i = 0; $i < $period; $i++) {
+                $formated = $dateNow->format("d.m");
+                $arResult['commit_chart'][$formated] = 0;
+                $arResult['lines_chart'][$formated] = array("add" => 0, "delete" => 0);
+                $arResult["files_chart"][$formated] = array("add" => 0, "modifed" => 0, "delete" => 0);
+                if (array_key_exists($formated, $arResult["dates"])) {
+                    foreach ($arResult["dates"][$formated] as $sha) {
+                        $arResult['commit_chart'][$formated]++;
+                        foreach ($arResult["commits_lines"][$sha] as $commit) {
+                            $arResult["all_lines_add"] += $commit['add'];
+                            $arResult["all_lines_delete"] += $commit['delete'];
+
+                            $arResult['lines_chart'][$formated]["add"] += $commit['add'];
+                            $arResult['lines_chart'][$formated]["delete"] += $commit['delete'];
+                        }
+
+                        foreach ($arResult["commits_files"][$sha]["A"] as $file) {
+                            $filesAddForPopup[$formated][] = "+ " . $file;
+                        }
+
+                        foreach ($arResult["commits_files"][$sha]["M"] as $file) {
+                            $filesModifiedForPopup[$formated][] = $file;
+                        }
+
+                        foreach ($arResult["commits_files"][$sha]["D"] as $file) {
+                            $filesDeleteForPopup[$formated][] = "- " . $file;
+                        }
+                        $arResult["all_files_add"] += count($arResult["commits_files"][$sha]["A"]);
+                        $arResult["all_files_modified"] += count($arResult["commits_files"][$sha]["M"]);
+                        $arResult["all_files_delete"] += count($arResult["commits_files"][$sha]["D"]);
+
+                        $arResult["files_chart"][$formated]['add'] += count($arResult["commits_files"][$sha]["A"]);
+                        $arResult["files_chart"][$formated]['modifed'] += count($arResult["commits_files"][$sha]["M"]);
+                        $arResult["files_chart"][$formated]['delete'] += count($arResult["commits_files"][$sha]["D"]);
+                    }
+                }
+                $dateNow->sub(new DateInterval("P1D"));
+            }
+            $arResult["commit_chart"] = array_reverse($arResult["commit_chart"]);
+            $arResult["files_chart"] = array_reverse($arResult["files_chart"]);
+            $arResult["lines_chart"] = array_reverse($arResult["lines_chart"]);
+            $obCache->save($key, $arResult, 30*60, "detail");
         }
-        $arResult["commit_chart"] = array_reverse($arResult["commit_chart"]);
-        $arResult["files_chart"] = array_reverse($arResult["files_chart"]);
-        $arResult["lines_chart"] = array_reverse($arResult["lines_chart"]);
         return $arResult;
     }
 
