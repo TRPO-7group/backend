@@ -452,7 +452,8 @@ class Repository
             "url" => $this->getUrl(),
             "discipline" => array("id" => $this->getDiscpline(), "name" => $discipline_name),
             "last_commit" => $lastCommit["date"],
-            "link" => $this->getLink()
+            "link" => $this->getLink(),
+            "child_reps" => $this->getChildReps()
         );
     }
 }
