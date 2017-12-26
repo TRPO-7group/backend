@@ -409,7 +409,7 @@ class Repository
 
     public function getChildReps()
     {
-        $listReps = DB::getList("rep_user_status","*",array('rep' => array("rep_user_status.user_rep", "rep.rep_id"), "user" => array("rep_user_status.user_id", "user.user_id")),"rep_user_status.rep_id=" . $this->getId());
+        $listReps = DB::getList("rep_user_status","*",array('rep' => array("rep_user_status.user_rep", "rep.rep_id"), "user" => array("rep_user_status.user_id", "user.user_id")),"rep_user_status.rep_id=" . $this->getId() . " AND rep_user_status.status=" . MainClass::$REP_USER_STATUS_ACCEPTED);
         $commits = $this->getUserCommits(false,  $lastCommit);
         $res = array();
         foreach ($listReps as $member)
