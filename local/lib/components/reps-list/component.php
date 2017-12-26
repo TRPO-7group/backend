@@ -30,7 +30,7 @@ if ($user["user_id"]) {
             "parent_rep" => $row["pater_rep"],
             "owner" => $row["rep_owner"],
             "discipline" => $row['name'],
-            "last_commit" => $commits[0]["date"],
+            "last_commit" => $lastCommit["date"],
             "tegs" => $tegs,
             "link" => $rep->getLink(),
             "language" => $rep->getLanguage()

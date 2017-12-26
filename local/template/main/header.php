@@ -3,7 +3,7 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>Title</title>
+    <title>Каталог репозиториев</title>
     <link rel="stylesheet" href="/reposit-catalog/local/markup/build/default.css" type="text/css"/>
     <link rel="stylesheet" href="/reposit-catalog/local/markup/multi-select/example-styles.css" type="text/css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
